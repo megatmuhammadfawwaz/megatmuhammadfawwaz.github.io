@@ -874,6 +874,7 @@ a.contact-value:hover { color:var(--accent-2); }
   color:var(--text-dim); font-size:0.88rem;
   transition: all var(--transition); pointer-events:none;
   background:transparent;
+  opacity:0;
 }
 .form-group input:focus ~ label,
 .form-group input:not(:placeholder-shown) ~ label,
@@ -883,6 +884,7 @@ a.contact-value:hover { color:var(--accent-2); }
   color:var(--accent);
   background:var(--bg-2);
   padding:0 6px;
+  opacity:1;
 }
 
 .form-note { text-align:center; font-size:0.85rem; min-height:20px; }
