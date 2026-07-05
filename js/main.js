@@ -221,4 +221,7 @@
       f.setAttribute("draggable", "false");
     });
   }
+
+  /* ── DISABLE RIGHT-CLICK (site-wide, view-only deterrent) ── */
+  document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
 })();
