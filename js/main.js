@@ -1,322 +1,224 @@
-/* ═══════════════════════════════════════════════════════
-   CUSTOM CURSOR
-═══════════════════════════════════════════════════════ */
-const cursorDot     = document.querySelector('.cursor-dot');
-const cursorOutline = document.querySelector('.cursor-outline');
+/* ═══════════════════════════════════════════════════════════
+   MEGAT FAWWAZ — PORTFOLIO (click-to-navigate SPA)
+   1. View router with blur/slide transitions + staggered reveals
+   2. Terminal boot sequence (home)
+   3. Network-node ambient canvas
+   4. Mobile nav
+   All effects disabled for prefers-reduced-motion.
+═══════════════════════════════════════════════════════════ */
 
-let mouseX = 0, mouseY = 0;
-let outlineX = 0, outlineY = 0;
+(function () {
+  "use strict";
 
-window.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursorDot.style.left = mouseX + 'px';
-  cursorDot.style.top  = mouseY + 'px';
-});
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function animateCursor() {
-  outlineX += (mouseX - outlineX) * 0.12;
-  outlineY += (mouseY - outlineY) * 0.12;
-  cursorOutline.style.left = outlineX + 'px';
-  cursorOutline.style.top  = outlineY + 'px';
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
-document.querySelectorAll('a, button, .skill-pill, .ctf-card, .area-card, .edu-card, .badge, .cert-card-wide').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
-});
+  var yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-/* ═══════════════════════════════════════════════════════
-   NAVBAR
-═══════════════════════════════════════════════════════ */
-const navbar    = document.getElementById('navbar');
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
+  var toggle = document.getElementById("navToggle");
+  var links = document.getElementById("navLinks");
+  if (toggle && links) {
+    toggle.addEventListener("click", function () {
+      var open = links.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
 
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-  document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
-});
+  if (!reduceMotion) document.body.classList.add("js-anim");
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  mobileMenu.classList.toggle('active');
-  document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-});
-
-document.querySelectorAll('.mobile-link').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('active');
-    document.body.style.overflow = '';
+  /* ── VIEW ROUTER ──────────────────────────────────── */
+  var VALID = ["home", "about", "projects", "ctf", "certs", "experience", "contact"];
+  var views = {};
+  document.querySelectorAll(".view").forEach(function (v) {
+    views[v.getAttribute("data-view")] = v;
   });
-});
+  var navLinks = document.querySelectorAll('.nav__links a[href^="#"]');
+  var current = null;
 
-/* ═══════════════════════════════════════════════════════
-   MATRIX RAIN
-═══════════════════════════════════════════════════════ */
-(function initMatrix() {
-  const canvas = document.getElementById('matrixCanvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, cols, drops;
-  const chars  = 'アイウエオカキクケコ0123456789ABCDEF{}[]<>/\\|;:'.split('');
-  const fontSize = 14;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    cols  = Math.floor(W / fontSize);
-    drops = Array(cols).fill(1);
+  function resolve(hash) {
+    var h = (hash || "").replace(/^#/, "");
+    if (h === "skills") return "about";
+    if (h === "top" || h === "") return "home";
+    return VALID.indexOf(h) >= 0 ? h : "home";
   }
-  resize();
-  window.addEventListener('resize', resize);
 
-  function draw() {
-    ctx.fillStyle = 'rgba(10,10,15,0.05)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#7c3aed';
-    ctx.font = fontSize + 'px monospace';
-    for (let i = 0; i < drops.length; i++) {
-      const char = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > H && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
+  function setNav(id) {
+    navLinks.forEach(function (a) {
+      a.classList.toggle("is-current", resolve(a.getAttribute("href")) === id);
+    });
+  }
+
+  function staggerReveal(view) {
+    var els = view.querySelectorAll(".reveal");
+    els.forEach(function (el, i) {
+      el.classList.remove("is-in");
+      if (reduceMotion) { el.classList.add("is-in"); return; }
+      el.style.transitionDelay = (i * 75) + "ms";
+      // force reflow so the removal + re-add re-triggers the transition
+      void el.offsetWidth;
+      requestAnimationFrame(function () { el.classList.add("is-in"); });
+    });
+  }
+
+  function activate(next, id) {
+    if (current) current.classList.remove("is-active", "enter");
+    next.classList.add("is-active");
+    setNav(id);
+    window.scrollTo(0, 0);
+    staggerReveal(next);
+    if (!reduceMotion) {
+      next.classList.add("enter");
+      setTimeout(function () { next.classList.remove("enter"); }, 700);
+    }
+    current = next;
+    var TITLES = { home: "Welcome", about: "About", projects: "Projects", ctf: "CTF", certs: "Certifications", experience: "Experience", contact: "Contact" };
+    document.title = (id === "home" ? "Megat Fawwaz — Cybersecurity Portfolio" : TITLES[id] + " — Megat Fawwaz");
+  }
+
+  function showView(id) {
+    id = resolve("#" + id);
+    var next = views[id];
+    if (!next || next === current) return;
+    var prev = current;
+    if (prev && !reduceMotion) {
+      prev.classList.add("leave");
+      setTimeout(function () {
+        prev.classList.remove("leave");
+        activate(next, id);
+      }, 250);
+    } else {
+      activate(next, id);
     }
   }
-  setInterval(draw, 50);
-})();
 
-/* ═══════════════════════════════════════════════════════
-   PARTICLE CANVAS
-═══════════════════════════════════════════════════════ */
-(function initParticles() {
-  const canvas = document.getElementById('particleCanvas');
-  const ctx    = canvas.getContext('2d');
-  let W, H, particles = [], mouse = { x: null, y: null };
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
-  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      this.x  = Math.random() * W;
-      this.y  = init ? Math.random() * H : H + 10;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = -(Math.random() * 0.6 + 0.2);
-      this.r  = Math.random() * 1.5 + 0.5;
-      this.alpha = Math.random() * 0.5 + 0.1;
-      this.color = Math.random() > 0.5 ? '124,58,237' : '6,182,212';
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (mouse.x !== null) {
-        const dx = mouse.x - this.x, dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 100) { this.x -= dx * 0.02; this.y -= dy * 0.02; }
+  // intercept every in-page hash link (nav, brand, hero CTAs)
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var id = resolve(a.getAttribute("href"));
+      e.preventDefault();
+      if (links) links.classList.remove("is-open");
+      if (toggle) toggle.setAttribute("aria-expanded", "false");
+      if (("#" + id) !== location.hash) {
+        history.pushState(null, "", "#" + id);
       }
-      if (this.y < -10) this.reset();
+      showView(id);
+    });
+  });
+
+  window.addEventListener("popstate", function () {
+    showView(resolve(location.hash));
+  });
+
+  // initial view from URL
+  showView(resolve(location.hash));
+
+  /* ── TERMINAL BOOT (home) ─────────────────────────── */
+  var term = document.getElementById("term");
+  if (term && !reduceMotion) {
+    var SCRIPT = [
+      { cmd: "whoami", out: ["<span class='hl'>Megat Muhammad Fawwaz</span>"] },
+      { cmd: "cat role.txt", out: ["Cybersecurity Undergraduate &middot; <span class='hl'>VAPT Intern @ Tenaga Nasional Berhad</span>"] },
+      { cmd: "./focus --list", out: ["OSINT &middot; Digital Forensics &middot; Penetration Testing"] }
+    ];
+    var TYPE_MS = 42, lineIdx = 0;
+
+    function typeCommand(cmdText, lineEl, done) {
+      var i = 0;
+      (function tick() {
+        if (i <= cmdText.length) {
+          lineEl.innerHTML = "<span class='p'>$</span> " + cmdText.slice(0, i) + "<span class='blink'>_</span>";
+          i++;
+          setTimeout(tick, TYPE_MS);
+        } else {
+          lineEl.innerHTML = "<span class='p'>$</span> " + cmdText;
+          done();
+        }
+      })();
     }
-    draw() {
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(${this.color},${this.alpha})`;
-      ctx.fill();
+    function runLine() {
+      if (lineIdx >= SCRIPT.length) {
+        var idle = document.createElement("p");
+        idle.innerHTML = "<span class='p'>$</span> <span class='blink'>_</span>";
+        term.appendChild(idle);
+        return;
+      }
+      var step = SCRIPT[lineIdx];
+      var cmdEl = document.createElement("p");
+      term.appendChild(cmdEl);
+      typeCommand(step.cmd, cmdEl, function () {
+        setTimeout(function () {
+          step.out.forEach(function (o) {
+            var outEl = document.createElement("p");
+            outEl.className = "out";
+            outEl.innerHTML = o;
+            term.appendChild(outEl);
+          });
+          lineIdx++;
+          setTimeout(runLine, 340);
+        }, 220);
+      });
     }
+    setTimeout(runLine, 550);
   }
 
-  for (let i = 0; i < 100; i++) particles.push(new Particle());
-
-  function drawLines() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i+1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        if (dist < 100) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(124,58,237,${0.08 * (1 - dist/100)})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
+  /* ── NETWORK-NODE CANVAS ──────────────────────────── */
+  var canvas = document.getElementById("rain");
+  if (canvas && canvas.getContext && !reduceMotion) {
+    var ctx = canvas.getContext("2d");
+    var nodes = [], W, H, COUNT, LINK = 130;
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      COUNT = Math.min(70, Math.floor((W * H) / 26000));
+      if (nodes.length > COUNT) nodes.length = COUNT;
+      while (nodes.length < COUNT) {
+        nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22 });
+      }
+    }
+    resize();
+    window.addEventListener("resize", resize);
+    function frame() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(61, 210, 255, 0.35)";
+        ctx.fill();
+        for (var j = i + 1; j < nodes.length; j++) {
+          var m = nodes[j];
+          var dx = n.x - m.x, dy = n.y - m.y, d = Math.sqrt(dx * dx + dy * dy);
+          if (d < LINK) {
+            ctx.beginPath();
+            ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y);
+            ctx.strokeStyle = "rgba(61, 210, 255," + (0.09 * (1 - d / LINK)) + ")";
+            ctx.lineWidth = 1; ctx.stroke();
+          }
         }
       }
+      requestAnimationFrame(frame);
     }
+    requestAnimationFrame(frame);
   }
 
-  function loop() {
-    ctx.clearRect(0,0,W,H);
-    particles.forEach(p => { p.update(); p.draw(); });
-    drawLines();
-    requestAnimationFrame(loop);
+  /* ── CERTIFICATE VIEW-ONLY PROTECTION ─────────────── */
+  /* Certificates are CSS background images (no <img> to "save as").
+     These handlers add deterrents: block context menu, drag and
+     copy on the certificate frames. Not DRM — a determined user can
+     always screenshot — but it keeps them display-only by default. */
+  var certScope = document.getElementById("certs");
+  if (certScope) {
+    var block = function (e) { e.preventDefault(); return false; };
+    certScope.addEventListener("contextmenu", block);
+    certScope.addEventListener("dragstart", block);
+    certScope.addEventListener("copy", block);
+    certScope.querySelectorAll(".cert__frame").forEach(function (f) {
+      f.setAttribute("draggable", "false");
+    });
   }
-  loop();
 })();
-
-/* ═══════════════════════════════════════════════════════
-   TYPING EFFECT — cybersecurity roles
-═══════════════════════════════════════════════════════ */
-(function initTyped() {
-  const el    = document.getElementById('typedText');
-  const roles = [
-    'Cybersecurity Undergraduate',
-    'CTF Player',
-    'Digital Forensics Enthusiast',
-    'OSINT Practitioner',
-    'Penetration Tester',
-    'Yayasan Khazanah Scholar',
-  ];
-  let roleIdx = 0, charIdx = 0, deleting = false;
-
-  function type() {
-    const current = roles[roleIdx];
-    if (!deleting) {
-      el.textContent = current.slice(0, ++charIdx);
-      if (charIdx === current.length) {
-        deleting = true;
-        setTimeout(type, 2000);
-        return;
-      }
-    } else {
-      el.textContent = current.slice(0, --charIdx);
-      if (charIdx === 0) {
-        deleting = false;
-        roleIdx = (roleIdx + 1) % roles.length;
-        setTimeout(type, 400);
-        return;
-      }
-    }
-    setTimeout(type, deleting ? 50 : 90);
-  }
-  type();
-})();
-
-/* ═══════════════════════════════════════════════════════
-   SCROLL REVEAL
-═══════════════════════════════════════════════════════ */
-const revealObserver = new IntersectionObserver(
-  entries => entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      revealObserver.unobserve(e.target);
-    }
-  }),
-  { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
-);
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-/* Immediately reveal anything already in viewport (handles hash navigation) */
-function revealInView() {
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
-    const r = el.getBoundingClientRect();
-    if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('visible');
-  });
-}
-window.addEventListener('load', revealInView);
-window.addEventListener('hashchange', () => setTimeout(revealInView, 100));
-
-/* ═══════════════════════════════════════════════════════
-   SKILL BARS (animate on scroll)
-═══════════════════════════════════════════════════════ */
-const barObserver = new IntersectionObserver(
-  entries => entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.bar-fill').forEach(bar => {
-        bar.style.width = bar.dataset.width + '%';
-      });
-      barObserver.unobserve(e.target);
-    }
-  }),
-  { threshold: 0.3 }
-);
-const barsSection = document.querySelector('.proficiency-bars');
-if (barsSection) barObserver.observe(barsSection);
-
-/* ═══════════════════════════════════════════════════════
-   CONTACT FORM
-═══════════════════════════════════════════════════════ */
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const note = document.getElementById('formNote');
-  const btn  = this.querySelector('button[type=submit]');
-  btn.disabled = true;
-  btn.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
-  setTimeout(() => {
-    note.textContent = '✅ Message sent! I\'ll get back to you soon.';
-    note.className = 'form-note success';
-    btn.disabled = false;
-    btn.innerHTML = '<span>Send Message</span><i class="fas fa-paper-plane"></i>';
-    this.reset();
-    setTimeout(() => { note.textContent = ''; note.className = 'form-note'; }, 5000);
-  }, 1200);
-});
-
-/* ═══════════════════════════════════════════════════════
-   BACK TO TOP
-═══════════════════════════════════════════════════════ */
-document.getElementById('backToTop').addEventListener('click', () => {
-  window.scrollTo({ top:0, behavior:'smooth' });
-});
-
-/* ═══════════════════════════════════════════════════════
-   FOOTER YEAR
-═══════════════════════════════════════════════════════ */
-document.getElementById('year').textContent = new Date().getFullYear();
-
-/* ═══════════════════════════════════════════════════════
-   ACTIVE NAV LINK on scroll
-═══════════════════════════════════════════════════════ */
-const sections   = document.querySelectorAll('section[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
-
-const navObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navAnchors.forEach(a => {
-        a.classList.toggle('active-link', a.getAttribute('href') === '#' + e.target.id);
-      });
-    }
-  });
-}, { threshold: 0.4 });
-sections.forEach(s => navObserver.observe(s));
-
-/* ═══════════════════════════════════════════════════════
-   STAGGER reveal delay for grid children
-═══════════════════════════════════════════════════════ */
-document.querySelectorAll('.skills-wrapper, .ctf-grid, .areas-grid, .edu-grid, .cert-grid-wide').forEach(grid => {
-  Array.from(grid.children).forEach((child, i) => {
-    child.style.transitionDelay = (i * 0.09) + 's';
-  });
-});
-
-/* ═══════════════════════════════════════════════════════
-   TILT EFFECT on ctf + area cards
-═══════════════════════════════════════════════════════ */
-document.querySelectorAll('.ctf-card, .area-card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 8;
-    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * -8;
-    card.style.transform = `translateY(-4px) rotateX(${y}deg) rotateY(${x}deg)`;
-    card.style.transition = 'transform 0.08s ease';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-    card.style.transition = 'all 0.3s cubic-bezier(0.4,0,0.2,1)';
-  });
-});
-
-/* Active nav link style */
-const style = document.createElement('style');
-style.textContent = `.nav-links a.active-link { color:#fff !important; }
-.nav-links a.active-link::after { width:100% !important; }`;
-document.head.appendChild(style);
