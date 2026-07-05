@@ -696,9 +696,13 @@ b { font-weight: 600; color: var(--ink); }
   border-bottom: 1px solid transparent; transition: border-color 0.2s ease, opacity 0.2s ease;
 }
 .foot__contact a:hover { border-bottom-color: var(--cyan); opacity: 0.85; }
+.foot__privacy {
+  font-family: var(--f-mono); font-size: 0.66rem; color: var(--ink-faint);
+  opacity: 0.72; max-width: 52ch; line-height: 1.6; margin-top: 2px;
+}
 .foot__copy {
   font-family: var(--f-mono); font-size: 0.7rem; color: var(--ink-faint);
-  letter-spacing: 0.05em; margin-top: 4px;
+  letter-spacing: 0.05em; margin-top: 6px;
 }
 
 /* ═══ REVEAL ON SCROLL ═══ */

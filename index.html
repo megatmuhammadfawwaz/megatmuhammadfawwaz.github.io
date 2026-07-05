@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!-- ══ SECURITY HARDENING ══ -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 
@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=15" />
+<link rel="stylesheet" href="css/style.css?v=16" />
 </head>
 <body>
 
@@ -544,10 +544,15 @@
       Need me?
       <a href="https://www.linkedin.com/in/megatmuhammadfawwaz/" target="_blank" rel="noopener noreferrer">Contact me ↗</a>
     </p>
+    <p class="foot__privacy">Privacy-first, cookieless analytics via Cloudflare · no cookies, no personal data collected.</p>
     <p class="foot__copy">© <span id="year">2026</span> · Built From Scratch <span class="blink">_</span></p>
   </div>
 </footer>
 
 <script src="js/main.js"></script>
+
+<!-- Cloudflare Web Analytics — privacy-first, cookieless, no individual visitor tracking -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "476174b44c9a442a963d0ebba6cd092f"}'></script>
+<!-- End Cloudflare Web Analytics -->
 </body>
 </html>
