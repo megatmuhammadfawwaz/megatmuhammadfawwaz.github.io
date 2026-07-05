@@ -738,15 +738,28 @@ body:not(.js-anim) .reveal { opacity: 1; transform: none; }
 .view[data-view="contact"] .contact__sub { margin-left: auto; margin-right: auto; }
 .view[data-view="contact"] .contact__grid { justify-content: center; }
 
-.js-anim .view.is-active.enter { animation: viewEnter 0.62s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-.js-anim .view.leave { animation: viewLeave 0.25s ease both; }
-@keyframes viewEnter {
-  0%   { opacity: 0; transform: translateY(30px) scale(0.994); filter: blur(10px); }
+/* directional horizontal slide transitions (forward = enter from right,
+   backward = enter from left; the leaving view slides the opposite way) */
+.js-anim .view.is-active.enter.enter--right { animation: slideInRight 0.5s cubic-bezier(0.22, 0.7, 0.2, 1) both; }
+.js-anim .view.is-active.enter.enter--left  { animation: slideInLeft  0.5s cubic-bezier(0.22, 0.7, 0.2, 1) both; }
+.js-anim .view.leave.leave--left  { animation: slideOutLeft  0.26s cubic-bezier(0.5, 0, 0.75, 0) both; }
+.js-anim .view.leave.leave--right { animation: slideOutRight 0.26s cubic-bezier(0.5, 0, 0.75, 0) both; }
+
+@keyframes slideInRight {
+  0%   { opacity: 0; transform: translateX(48px); filter: blur(4px); }
   100% { opacity: 1; transform: none; filter: blur(0); }
 }
-@keyframes viewLeave {
+@keyframes slideInLeft {
+  0%   { opacity: 0; transform: translateX(-48px); filter: blur(4px); }
+  100% { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes slideOutLeft {
   0%   { opacity: 1; transform: none; filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-18px); filter: blur(6px); }
+  100% { opacity: 0; transform: translateX(-40px); filter: blur(3px); }
+}
+@keyframes slideOutRight {
+  0%   { opacity: 1; transform: none; filter: blur(0); }
+  100% { opacity: 0; transform: translateX(40px); filter: blur(3px); }
 }
 
 /* animated nav underline + active state */

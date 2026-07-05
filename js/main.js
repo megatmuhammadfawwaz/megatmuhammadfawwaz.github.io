@@ -62,15 +62,15 @@
     });
   }
 
-  function activate(next, id) {
-    if (current) current.classList.remove("is-active", "enter");
+  function activate(next, id, dir) {
+    if (current) current.classList.remove("is-active", "enter", "enter--left", "enter--right");
     next.classList.add("is-active");
     setNav(id);
     window.scrollTo(0, 0);
     staggerReveal(next);
     if (!reduceMotion) {
-      next.classList.add("enter");
-      setTimeout(function () { next.classList.remove("enter"); }, 700);
+      next.classList.add("enter", dir === "back" ? "enter--left" : "enter--right");
+      setTimeout(function () { next.classList.remove("enter", "enter--left", "enter--right"); }, 700);
     }
     current = next;
     var TITLES = { home: "Welcome", about: "About", projects: "Projects", ctf: "CTF", certs: "Certifications", experience: "Experience", contact: "Contact" };
@@ -82,14 +82,18 @@
     var next = views[id];
     if (!next || next === current) return;
     var prev = current;
+    var dir = "fwd";
+    if (prev) {
+      dir = (VALID.indexOf(id) < VALID.indexOf(prev.getAttribute("data-view"))) ? "back" : "fwd";
+    }
     if (prev && !reduceMotion) {
-      prev.classList.add("leave");
+      prev.classList.add("leave", dir === "back" ? "leave--right" : "leave--left");
       setTimeout(function () {
-        prev.classList.remove("leave");
-        activate(next, id);
+        prev.classList.remove("leave", "leave--left", "leave--right");
+        activate(next, id, dir);
       }, 250);
     } else {
-      activate(next, id);
+      activate(next, id, dir);
     }
   }
 
