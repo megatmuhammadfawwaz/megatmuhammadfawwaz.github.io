@@ -74,7 +74,7 @@
     }
     current = next;
     var TITLES = { home: "Welcome", about: "About", projects: "Projects", ctf: "CTF", certs: "Certifications", experience: "Experience", contact: "Contact" };
-    document.title = (id === "home" ? "Megat Fawwaz — Cybersecurity Portfolio" : TITLES[id] + " — Megat Fawwaz");
+    document.title = (id === "home" ? "Megat Muhammad Fawwaz — Cybersecurity Portfolio" : TITLES[id] + " — Megat Muhammad Fawwaz");
   }
 
   function showView(id) {
