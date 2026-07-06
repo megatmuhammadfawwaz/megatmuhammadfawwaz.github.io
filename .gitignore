@@ -1,6 +1,12 @@
 # Claude Code internal
 .claude/
 
+# Graphify knowledge graph output
+graphify-out/
+
+# CodeGraph index
+.codegraph/
+
 # OS / editor
 .DS_Store
 Thumbs.db
