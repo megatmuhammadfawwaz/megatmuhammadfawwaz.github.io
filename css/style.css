@@ -627,6 +627,7 @@ b { font-weight: 600; color: var(--ink); }
 .cert__frame--api    { background-image: url("../assets/certs/api-rta.png"); }
 .cert__frame--blue   { background-image: url("../assets/certs/blue-team.png"); }
 .cert__frame--claude { background-image: url("../assets/certs/claude-code.png"); }
+.cert__frame--ccna   { background-image: url("../assets/certs/ccna.png"); }
 
 /* transparent shield that sits above the image and eats pointer/long-press */
 .cert__guard {
