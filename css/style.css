@@ -43,6 +43,9 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
@@ -683,7 +686,7 @@ b { font-weight: 600; color: var(--ink); }
 }
 
 /* ═══ FOOTER ═══ */
-.foot { border-top: 1px solid var(--line-soft); margin-top: 40px; background: rgba(148, 184, 255, 0.02); }
+.foot { border-top: 1px solid var(--line-soft); margin-top: 0; flex-shrink: 0; background: rgba(148, 184, 255, 0.02); }
 .foot__mini {
   max-width: var(--max); margin: 0 auto;
   padding: 24px var(--pad) 26px;
@@ -720,12 +723,15 @@ b { font-weight: 600; color: var(--ink); }
 body:not(.js-anim) .reveal { opacity: 1; transform: none; }
 
 /* ═══ VIEW ROUTER (click-to-navigate) ═══ */
+/* main grows to fill the viewport so the footer sticks to the bottom */
+main { display: flex; flex-direction: column; flex: 1 0 auto; }
+
 .view { display: none; }
 .view.is-active {
   display: grid;
   align-content: safe center;      /* balance content vertically; top-align if taller than viewport */
-  min-height: calc(100svh - 72px);
-  padding: 96px 0 64px;
+  flex: 1 0 auto;                  /* fill the growable main above the sticky footer */
+  padding: 88px 0 48px;
 }
 .view[data-view="home"].is-active {
   display: block;
