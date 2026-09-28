@@ -328,7 +328,8 @@
     date: { run: function () { print(new Date().toString()); } },
     echo: { run: function (args) { print(args.join(" ")); } },
     history: { run: function () { grid(hist.map(function (h, i) { return [span(String(i + 1), "dim"), h, span("")]; })); } },
-    hello: { run: function () { print(["Hi there! Type ", span("help", "ok"), " to look around."]); } }
+    hello: { run: function () { print(["Hi there! Type ", span("help", "ok"), " to look around."]); } },
+    ceh: { run: function (args) { cehCommand(args); } }
   };
   // aliases: same behaviour, hidden from help and tab-completion
   COMMANDS.exp = { run: COMMANDS.experience.run };
@@ -346,7 +347,69 @@
   // anything run while the intro is typing fast-forwards it, then runs in order
   function exec(v) {
     if (booting) skipBoot = true;
+    if (secretPrompt) cancelSecret();
     bootDone.then(function () { run(v); });
+  }
+
+  /* ── private CEH study vault (temporary) ──
+     Hidden `ceh` command. The questions live encrypted in /ceh/vault.bin;
+     deleting the /ceh folder disables this and the command then reports
+     "command not found". The passphrase never enters history or storage. */
+  var CEH_PATH = "ceh/";
+  var secretPrompt = null;
+  var promptLabel = form ? $("label", form) : null;
+
+  function askSecret(label, handler) {
+    secretPrompt = handler;
+    promptLabel.textContent = label;
+    input.type = "password";
+    input.value = "";
+    input.focus({ preventScroll: true });
+  }
+  function endSecret() {
+    secretPrompt = null;
+    promptLabel.textContent = PROMPT;
+    input.type = "text";
+  }
+  function cancelSecret() {
+    endSecret();
+    print(span("^C", "dim"));
+  }
+  function loadVault() {
+    if (window.CEHVault) return Promise.resolve(window.CEHVault);
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = CEH_PATH + "vault.js";
+      s.onload = function () { if (window.CEHVault) resolve(window.CEHVault); else reject(new Error("offline")); };
+      s.onerror = function () { s.remove(); reject(new Error("offline")); };
+      document.head.appendChild(s);
+    });
+  }
+  function openTrainer() {
+    print(span("→ opening CEH trainer…", "dim"));
+    setTimeout(function () { location.href = CEH_PATH; }, reduceMotion ? 0 : 700);
+  }
+  function cehCommand(args) {
+    var notFound = function () { print([span("command not found: ceh", "err"), span(" · try ", "dim"), span("help", "ok")]); };
+    if (!window.crypto || !crypto.subtle || typeof DecompressionStream === "undefined") return notFound();
+    loadVault().then(function (V) {
+      return V.read().then(function () { return V; });
+    }).then(function (V) {
+      if (args[0] === "--lock") { V.lock(); print(span("✔ vault locked", "ok")); return; }
+      if (V.isUnlocked()) { print(span("✔ vault already unlocked in this tab", "ok")); openTrainer(); return; }
+      print(["🔒 CEH study vault · owner only", span("  (esc to cancel)", "dim")]);
+      askSecret("passphrase:", function (pass) {
+        print([span("passphrase:", "pr"), span(" ••••••••", "dim")]);
+        if (!pass) { print(span("^C", "dim")); return; }
+        print(span("deriving key (PBKDF2-SHA256 · 600k rounds)…", "dim"));
+        V.unlock(pass).then(function (data) {
+          print(span("✔ vault unlocked · " + data.questions.length + " questions decrypted", "ok"));
+          openTrainer();
+        }, function (err) {
+          print(span(err.message === "offline" ? "ceh: vault offline" : "✗ wrong passphrase", "err"));
+        });
+      });
+    }, notFound);
   }
 
   function run(raw) {
@@ -405,9 +468,11 @@
       e.preventDefault();
       var v = input.value;
       input.value = "";
+      if (secretPrompt) { var answer = secretPrompt; endSecret(); answer(v); return; }
       exec(v);
     });
     input.addEventListener("keydown", function (e) {
+      if (secretPrompt) { if (e.key === "Escape") { e.preventDefault(); cancelSecret(); } return; }
       if (e.key === "Tab") { e.preventDefault(); complete(); }
       else if (e.key === "ArrowUp") { if (histIdx > 0) { histIdx--; input.value = hist[histIdx]; } e.preventDefault(); }
       else if (e.key === "ArrowDown") { histIdx = Math.min(hist.length, histIdx + 1); input.value = hist[histIdx] || ""; e.preventDefault(); }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Private study page. The quiz renders progress bars with inline style
+     widths, so this page (only) allows inline styles. No inline script. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>CEH v13 Quiz Trainer · private</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="unlock.css">
+</head>
+<body>
+
+<!-- lock screen: shown until the vault is decrypted -->
+<main class="vault" id="vault">
+  <div class="vault__box">
+    <p class="vault__bar"><span></span><span></span><span></span> fawwaz@sec: ~/ceh</p>
+    <div class="vault__body">
+      <p class="vault__icon" aria-hidden="true">🔒</p>
+      <h1>CEH study vault</h1>
+      <p class="vault__sub">Private practice area. Enter the passphrase to decrypt.</p>
+      <form id="vaultForm" autocomplete="off">
+        <label for="vaultPass" class="vault__label">passphrase</label>
+        <input id="vaultPass" type="password" required autocomplete="current-password" spellcheck="false">
+        <button type="submit" id="vaultBtn">Unlock</button>
+      </form>
+      <p class="vault__msg" id="vaultMsg" role="status"></p>
+      <a class="vault__back" href="../">← back to portfolio</a>
+    </div>
+  </div>
+</main>
+
+<div id="app" hidden>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">CEH</span>
+        <span class="brand-sub">v13 Quiz Trainer</span>
+      </div>
+      <nav class="nav" id="nav">
+        <button class="nav-btn" data-action="nav" data-view="home">Practice</button>
+        <button class="nav-btn" data-action="nav" data-view="scoreboard">Scoreboard</button>
+        <button class="nav-btn" data-action="nav" data-view="weak">Weak Spots <span id="nav-weak-count" class="nav-count"></span></button>
+      </nav>
+      <div id="topbar-stats" class="topbar-stats"></div>
+      <button class="vault-lock" id="vaultLock" type="button" title="Lock the vault and return to the portfolio">⏻ Lock</button>
+    </div>
+  </header>
+
+  <main id="view-root"></main>
+
+  <footer class="footer">
+    <span id="footer-meta"></span>
+  </footer>
+
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+<input type="file" id="import-file" accept="application/json,.json" hidden>
+
+<script src="vault.js"></script>
+<script src="unlock.js"></script>
+</body>
+</html>
