@@ -1,0 +1,5 @@
+# Found a security issue on this site? Thank you. Please reach out privately.
+Contact: https://www.linkedin.com/in/megatmuhammadfawwaz/
+Expires: 2027-09-28T00:00:00.000Z
+Preferred-Languages: en, ms
+Canonical: https://megatmuhammadfawwaz.github.io/.well-known/security.txt

@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:www.linkedin.com)",
-      "mcp__Claude_in_Chrome__tabs_context_mcp"
-    ]
-  }
-}

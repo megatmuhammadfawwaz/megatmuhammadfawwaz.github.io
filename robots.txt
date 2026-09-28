@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://megatmuhammadfawwaz.github.io/sitemap.xml

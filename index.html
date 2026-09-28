@@ -1,330 +1,333 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- ══ SECURITY HARDENING ══ -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://megatmuhammadfawwaz.goatcounter.com; connect-src 'self' https://megatmuhammadfawwaz.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests" />
-<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<!-- ══ SECURITY ══
+     GitHub Pages cannot send response headers, so policy lives here.
+     No inline script or style anywhere: CSP needs no 'unsafe-inline'. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://gc.zgo.at; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://megatmuhammadfawwaz.goatcounter.com; connect-src 'self' https://megatmuhammadfawwaz.goatcounter.com; object-src 'none'; base-uri 'self'; form-action 'none'; manifest-src 'self'; upgrade-insecure-requests" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-<title>Megat Muhammad Fawwaz — Cybersecurity Portfolio</title>
-<meta name="description" content="Megat Muhammad Fawwaz. Cybersecurity undergraduate, VAPT intern at Tenaga Nasional Berhad and CTF player. Offensive security, digital forensics and applied AI." />
+<title>Megat Muhammad Fawwaz · Offensive Security &amp; Digital Forensics</title>
+<meta name="description" content="Megat Muhammad Fawwaz: final-year cybersecurity undergraduate, VAPT intern at Tenaga Nasional Berhad and 2× CTF champion. Offensive security, digital forensics and applied AI." />
 <meta name="author" content="Megat Muhammad Fawwaz" />
+<meta name="theme-color" content="#111418" />
+<meta name="color-scheme" content="dark" />
+<link rel="canonical" href="https://megatmuhammadfawwaz.github.io/" />
 
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Megat Muhammad Fawwaz — Cybersecurity Portfolio" />
-<meta property="og:description" content="Cybersecurity Undergraduate. VAPT Intern @ TNB. CTF Player. Offensive security, digital forensics and applied AI." />
-<meta property="og:url" content="https://megatmuhammadfawwaz.github.io" />
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content="Megat Muhammad Fawwaz" />
+<meta property="og:title" content="Megat Muhammad Fawwaz · Offensive Security &amp; Digital Forensics" />
+<meta property="og:description" content="Final-year cybersecurity undergraduate · VAPT intern @ TNB · 2× CTF champion · 17 CTF events. Offensive security, digital forensics and applied AI." />
+<meta property="og:url" content="https://megatmuhammadfawwaz.github.io/" />
+<meta property="og:image" content="https://megatmuhammadfawwaz.github.io/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Megat Muhammad Fawwaz, offensive security portfolio" />
+<meta name="twitter:card" content="summary_large_image" />
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070B14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' fill='%233DD2FF' text-anchor='middle'%3EF%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=21" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css?v=30" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Megat Muhammad Fawwaz",
+  "url": "https://megatmuhammadfawwaz.github.io/",
+  "jobTitle": "Cybersecurity Undergraduate · VAPT Intern",
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "Universiti Tenaga Nasional" },
+  "knowsAbout": ["Penetration Testing", "Attack Surface Management", "Digital Forensics", "OSINT", "Reverse Engineering", "Explainable AI"],
+  "sameAs": ["https://www.linkedin.com/in/megatmuhammadfawwaz/", "https://github.com/megatmuhammadfawwaz"]
+}
+</script>
 </head>
 <body>
 
-<!-- ambient background layers -->
-<div class="bg-grid" aria-hidden="true"></div>
-<canvas class="bg-rain" id="rain" aria-hidden="true"></canvas>
-<div class="bg-scan" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
 
-<!-- ══ STANDARD HEADER ══ -->
+<div class="bg" aria-hidden="true">
+  <div class="bg__aurora"></div>
+  <canvas class="bg__net" id="bgNet"></canvas>
+</div>
+
+<!-- ══ NAV ══ -->
 <header class="nav" id="nav">
-  <a href="#home" class="nav__brand">
-    <span class="nav__prompt">~/</span>Fawwaz<span class="nav__cursor">_</span>
-  </a>
+  <a href="#home" class="nav__brand" aria-label="Megat Muhammad Fawwaz, back to top"><span>~/</span>fawwaz<i class="caret"></i></a>
   <nav class="nav__links" id="navLinks" aria-label="Primary">
-    <a href="#home"><span>00.</span> Welcome</a>
-    <a href="#about"><span>01.</span> About</a>
-    <a href="#projects"><span>02.</span> Projects</a>
-    <a href="#ctf"><span>03.</span> CTF</a>
-    <a href="#certs"><span>04.</span> Certs</a>
-    <a href="#experience"><span>05.</span> Experience</a>
-    <a href="#contact"><span>06.</span> Contact</a>
+    <a href="#about">about</a>
+    <a href="#projects">projects</a>
+    <a href="#ctf">ctf</a>
+    <a href="#certs">certs</a>
+    <a href="#experience">experience</a>
+    <a href="#contact">contact</a>
   </nav>
-  <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
-    <span></span><span></span><span></span>
+  <button class="nav__search" id="paletteOpen" type="button" aria-label="Open command menu" aria-haspopup="dialog" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <span class="nav__search-text">Jump to…</span>
+    <kbd id="paletteKbd">Ctrl K</kbd>
+  </button>
+  <button class="nav__toggle" id="navToggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+    <span></span><span></span>
   </button>
 </header>
 
-<main id="top">
+<main id="main">
 
-<!-- ══ VIEW: HOME ══ -->
-<section class="view" data-view="home">
-  <div class="hero">
-    <div class="hero__inner">
+<!-- ══ HERO ══ -->
+<section class="hero" id="home" aria-labelledby="heroName">
+  <div class="wrap">
+    <p class="status"><span class="status__dot"></span> Open to graduate programmes &amp; junior security roles</p>
+    <h1 class="hero__name" id="heroName">Megat Muhammad Fawwaz<span class="hero__caret" aria-hidden="true">_</span></h1>
+    <p class="hero__sub"><span class="c">//</span> Cybersecurity Graduate @ Universiti Tenaga Nasional</p>
 
-      <div class="hero__left">
-        <p class="hero__status">
-          <span class="dot"></span> AVAILABLE · Open To Graduate Programme And Junior Role
-        </p>
+    <div class="hero__grid">
 
-        <div class="term" role="img" aria-label="Terminal introducing Megat Muhammad Fawwaz, cybersecurity undergraduate and VAPT intern at Tenaga Nasional Berhad">
-          <div class="term__bar">
-            <span class="term__dots"><i></i><i></i><i></i></span>
-            <span class="term__title">Fawwaz@portfolio: ~</span>
+      <!-- interactive terminal -->
+      <div class="term" id="term">
+        <div class="term__bar">
+          <span class="term__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="term__title">fawwaz@sec: ~ <span class="term__hint">— interactive, type <b>help</b></span></span>
+        </div>
+        <div class="term__body" id="termBody">
+          <div class="term__out" id="termOut" role="log" aria-live="polite" aria-label="Terminal output">
+            <p><span class="pr">fawwaz@sec:~$</span> whoami</p>
+            <p>Megat Muhammad Fawwaz · final-year BSc Cyber Security, UNITEN</p>
+            <p><span class="pr">fawwaz@sec:~$</span> projects --top 3</p>
+            <p><span class="c">[1]</span> SURIA · attack surface management · <span class="hl">2,000+ assets</span></p>
+            <p><span class="c">[2]</span> Explainable deepfake detection · <span class="hl">0.9988 AUC</span></p>
+            <p><span class="c">[3]</span> DIV:IDE CTF · reverse engineering track author</p>
           </div>
-          <div class="term__body">
-            <div class="term__live" id="term" aria-hidden="true"></div>
-            <div class="term__fallback">
-              <p><span class="p">$</span> whoami</p>
-              <p class="out">Megat Muhammad Fawwaz</p>
-              <p><span class="p">$</span> cat role.txt</p>
-              <p class="out">Cybersecurity Undergraduate · VAPT Intern @ Tenaga Nasional Berhad</p>
-              <p><span class="p">$</span> ./focus --list</p>
-              <p class="out">OSINT · Digital Forensics · Penetration Testing</p>
-              <p><span class="p">$</span> <span class="blink">_</span></p>
-            </div>
+          <form class="term__form" id="termForm" autocomplete="off" hidden>
+            <label for="termInput" class="pr">fawwaz@sec:~$</label>
+            <input id="termInput" type="text" spellcheck="false" autocapitalize="off" aria-describedby="termHelp" />
+          </form>
+          <p class="sr-only" id="termHelp">Type a command such as help, projects, ctf or contact, then press Enter. Tab completes, arrow keys recall history.</p>
+          <div class="term__chips" id="termChips" hidden>
+            <button type="button" data-cmd="help">help</button>
+            <button type="button" data-cmd="about">about</button>
+            <button type="button" data-cmd="projects">projects</button>
+            <button type="button" data-cmd="ctf --wins">ctf --wins</button>
+            <button type="button" data-cmd="contact">contact</button>
+            <button type="button" data-cmd="sudo hire-me">sudo hire-me</button>
           </div>
         </div>
-
-        <h1 class="hero__name">Megat&nbsp;Muhammad&nbsp;Fawwaz</h1>
-        <p class="hero__tag">
-          I break, investigate and defend systems, then build the tooling to do it at scale.
-          A Yayasan Khazanah Watan Scholar working at the offensive edge of cybersecurity.
-        </p>
-
-        <div class="hero__cta">
-          <a href="#about" class="btn btn--solid">About Me →</a>
-          <a href="#contact" class="btn btn--ghost">Get In Touch</a>
-        </div>
-
-        <ul class="hero__stats" aria-label="Highlights">
-          <li><b>3.90</b><span>CGPA</span></li>
-          <li><b>17</b><span>CTF Events</span></li>
-          <li><b>2×</b><span>Champion</span></li>
-          <li><b>Top 5</b><span>Intl Final</span></li>
-        </ul>
       </div>
 
-      <div class="hero__right">
-        <figure class="idcard">
-          <div class="idcard__chrome">
-            <span class="term__dots"><i></i><i></i><i></i></span>
-            <span class="idcard__file">id_profile.jpg</span>
+      <!-- status HUD -->
+      <div class="hud">
+        <div class="card card--id">
+          <figure class="idpic">
+            <img src="assets/profile-240.webp" srcset="assets/profile-240.webp 240w, assets/profile-480.webp 480w" sizes="96px" width="96" height="132" alt="Portrait of Megat Muhammad Fawwaz, face intentionally redacted" />
+            <figcaption>REDACTED</figcaption>
+          </figure>
+          <div>
+            <p class="card__title">Final-year · BSc Cyber Security</p>
+            <p class="card__meta">Universiti Tenaga Nasional<br />Yayasan Khazanah Watan Scholar</p>
+            <p class="card__live">VAPT intern @ TNB</p>
           </div>
-          <div class="idcard__photo">
-            <img src="assets/profile.jpg" alt="Portrait of Megat Muhammad Fawwaz" loading="eager" />
-            <div class="idcard__scan" aria-hidden="true"></div>
-          </div>
-          <figcaption class="idcard__meta">
-            <span><i>›</i> UNITEN · BSc Cyber Security (Hons.)</span>
-            <span><i>›</i> Malaysia</span>
-            <span><i>›</i> Status: <b>Final Year</b></span>
-          </figcaption>
-        </figure>
+        </div>
+        <div class="card stat"><span class="lbl">CGPA</span><b>3.90</b><small>Dean's list, every semester</small></div>
+        <div class="card stat"><span class="lbl">CTF events</span><b>17</b><small>national &amp; international</small></div>
+        <div class="card stat"><span class="lbl">Championships</span><b>2<em>×</em></b><small>PitchCraft · DIV:IDE</small></div>
+        <div class="card stat"><span class="lbl">Intl final</span><b>Top&nbsp;5</b><small>HACK10 International 2026</small></div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ══ VIEW: ABOUT (+ skills) ══ -->
-<section class="view" data-view="about">
-  <div class="section">
-    <p class="eyebrow"><span>~/about $</span> cat summary.md</p>
+<!-- ══ ABOUT ══ -->
+<section class="section" id="about" aria-labelledby="aboutTitle">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker"><span>01</span> ~/about <em>$ cat summary.md</em></p>
+      <h2 class="h2" id="aboutTitle">Offensive by instinct, methodical by training.</h2>
+    </header>
+
     <div class="about">
       <div class="about__body reveal">
-        <h2 class="h2">Offensive By Instinct, Methodical By Training.</h2>
         <p>
-          I'm a final year <b>BSc Computer Science (Cyber Security)</b> student at Universiti Tenaga Nasional
-          and a Yayasan Khazanah Watan Scholar, currently completing a <b>Vulnerability Assessment &amp;
-          Penetration Testing</b> internship at Tenaga Nasional Berhad.
+          I'm a final-year <b>BSc Computer Science (Cyber Security)</b> student at Universiti Tenaga Nasional and a
+          Yayasan Khazanah Watan Scholar, completing a <b>Vulnerability Assessment &amp; Penetration Testing</b>
+          internship at Tenaga Nasional Berhad.
         </p>
         <p>
-          My sharpest skills come from the field. Across <b>17 national and international CTF competitions</b>
-          I've earned two championship wins and an international top 5 finish, spanning OSINT, digital forensics,
-          web exploitation, cryptography and reverse engineering. I've since moved from solving challenges to
-          <b>authoring them</b> and from finding exposures to <b>building the platform that tracks them</b>.
+          My sharpest skills come from the field. Across <b>17 national and international CTF competitions</b> I've
+          earned two championship wins and an international top-5 finish, spanning OSINT, digital forensics, web
+          exploitation, cryptography and reverse engineering. I've since moved from solving challenges to
+          <b>authoring them</b>, and from finding exposures to <b>building the platform that tracks them</b>.
         </p>
         <p>
           I'm looking for a graduate role where I can keep working at the intersection of offensive security,
           digital forensics and applied AI.
         </p>
       </div>
-      <aside class="about__side reveal">
-        <h3 class="side__title">// Currently</h3>
-        <ul class="side__list">
-          <li><span>Role</span> VAPT Intern @ TNB</li>
-          <li><span>Building</span> SURIA Attack Surface Platform</li>
-          <li><span>Studying</span> CEH (EC-Council)</li>
-          <li><span>Committee</span> CLICQ DIV:IDE</li>
-        </ul>
+
+      <aside class="ps reveal" aria-label="What I'm doing now">
+        <p class="ps__title"><span class="pr">$</span> ps aux --user fawwaz</p>
+        <table class="ps__table">
+          <thead><tr><th scope="col">PID</th><th scope="col">Process</th><th scope="col">State</th></tr></thead>
+          <tbody>
+            <tr><td>101</td><td>vapt-intern@tnb</td><td><span class="st st--run">running</span></td></tr>
+            <tr><td>102</td><td>suria-platform</td><td><span class="st st--run">building</span></td></tr>
+            <tr><td>103</td><td>ceh --ec-council</td><td><span class="st st--wait">studying</span></td></tr>
+            <tr><td>104</td><td>clicq-divide</td><td><span class="st st--run">active</span></td></tr>
+          </tbody>
+        </table>
       </aside>
     </div>
-  </div>
 
-  <div class="section">
-    <p class="eyebrow"><span>~/skills $</span> cat arsenal.json</p>
-    <h2 class="h2 section__lead">Arsenal.</h2>
-    <div class="skills">
-      <div class="skills__col reveal">
-        <h3 class="skills__title"><i>›</i> Offensive</h3>
-        <ul class="chips"><li>VAPT</li><li>Attack Surface Mgmt</li><li>OSINT</li><li>Web Exploitation</li><li>API Pentesting</li><li>Reverse Engineering</li><li>Cryptography</li></ul>
-      </div>
-      <div class="skills__col reveal">
-        <h3 class="skills__title"><i>›</i> Defensive &amp; Forensics</h3>
-        <ul class="chips"><li>Digital Forensics</li><li>Incident Response</li><li>Threat Detection</li><li>Log Analysis</li><li>Network Security</li></ul>
-      </div>
-      <div class="skills__col reveal">
-        <h3 class="skills__title"><i>›</i> Tooling</h3>
-        <ul class="chips"><li>Burp Suite</li><li>Shodan</li><li>Nmap</li><li>Wireshark</li><li>Ghidra</li><li>Autopsy</li><li>Volatility</li><li>John The Ripper</li></ul>
-      </div>
-      <div class="skills__col reveal">
-        <h3 class="skills__title"><i>›</i> AI / ML</h3>
-        <ul class="chips"><li>PyTorch</li><li>YOLOv8</li><li>Grad-CAM++</li><li>Explainable AI</li><li>Streamlit</li></ul>
-      </div>
-      <div class="skills__col reveal">
-        <h3 class="skills__title"><i>›</i> Languages</h3>
-        <ul class="chips"><li>Python</li><li>C++</li><li>Java</li><li>SQL</li><li>JavaScript</li><li>PHP</li></ul>
+    <div class="modules" id="skills">
+      <p class="modules__head reveal"><span class="pr">$</span> lsmod <span class="c">| grep skills</span></p>
+      <div class="modules__grid">
+        <div class="mod reveal">
+          <h3 class="mod__name">offensive</h3>
+          <ul class="chips"><li>VAPT</li><li>Attack Surface Mgmt</li><li>OSINT</li><li>Web Exploitation</li><li>API Pentesting</li><li>Reverse Engineering</li><li>Cryptography</li></ul>
+        </div>
+        <div class="mod reveal">
+          <h3 class="mod__name">defensive &amp; forensics</h3>
+          <ul class="chips"><li>Digital Forensics</li><li>Incident Response</li><li>Threat Detection</li><li>Log Analysis</li><li>Network Security</li></ul>
+        </div>
+        <div class="mod reveal">
+          <h3 class="mod__name">tooling</h3>
+          <ul class="chips"><li>Burp Suite</li><li>Shodan</li><li>Nmap</li><li>Wireshark</li><li>Ghidra</li><li>Autopsy</li><li>Volatility</li><li>John the Ripper</li></ul>
+        </div>
+        <div class="mod reveal">
+          <h3 class="mod__name">ai / ml</h3>
+          <ul class="chips"><li>PyTorch</li><li>YOLOv8</li><li>Grad-CAM++</li><li>Explainable AI</li><li>Streamlit</li></ul>
+        </div>
+        <div class="mod reveal">
+          <h3 class="mod__name">languages</h3>
+          <ul class="chips"><li>Python</li><li>C++</li><li>Java</li><li>SQL</li><li>JavaScript</li><li>PHP</li></ul>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ VIEW: PROJECTS ══ -->
-<section class="view" data-view="projects">
-  <div class="section">
-    <p class="eyebrow"><span>~/projects $</span> ls -la --sort=impact</p>
-    <h2 class="h2 section__lead">Things I've Built.</h2>
+<!-- ══ PROJECTS ══ -->
+<section class="section" id="projects" aria-labelledby="projTitle">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker"><span>02</span> ~/projects <em>$ ls --sort=impact</em></p>
+      <h2 class="h2" id="projTitle">Things I've built.</h2>
+    </header>
 
     <div class="projects">
 
-      <article class="proj reveal">
-        <div class="proj__head">
-          <div class="proj__id">
-            <span class="proj__kind">// Platform</span>
-            <h3 class="proj__name">SURIA</h3>
-            <p class="proj__sub">Attack Surface Management System</p>
-          </div>
-          <span class="proj__badge">2026</span>
-          <span class="proj__repo proj__repo--private"><i>🔒</i> Private Repo</span>
+      <article class="proj proj--wide reveal">
+        <div class="proj__bar">
+          <span class="proj__path">~/projects/<b>suria</b></span>
+          <span class="proj__year">2026</span>
+          <span class="repo repo--private"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Private repo</span>
         </div>
-        <div class="proj__body">
-          <p class="proj__desc">
-            A full stack passive <b>attack surface management</b> platform I designed and built to map and
-            monitor an organisation's internet facing footprint. It aggregates external exposure data from
-            Shodan and seven OSINT sources into one console, then flags exactly what changed between scans.
-          </p>
-
-          <div class="proj__block">
-            <span class="proj__label">Highlights</span>
+        <div class="proj__grid">
+          <div class="proj__main">
+            <p class="proj__kind">[1] platform</p>
+            <h3 class="proj__name">SURIA</h3>
+            <p class="proj__sub">Attack surface management system</p>
+            <p class="proj__desc">
+              A full-stack passive <b>attack surface management</b> platform I designed and built to map and monitor an
+              organisation's internet-facing footprint. It aggregates external exposure data from Shodan and seven OSINT
+              sources into one console, then flags exactly what changed between scans.
+            </p>
             <ul class="proj__points">
               <li>Aggregates <b>Shodan and 7 OSINT sources</b>: Certificate Transparency, DNS, TLS, WHOIS/RDAP, Wayback, AbuseIPDB and VirusTotal.</li>
-              <li>A snapshot based <b>change detection engine</b> where every scan is an immutable snapshot, diffed by a service identity key and content fingerprint.</li>
-              <li>Governed scanning with <b>role based access, an approval whitelist and an immutable audit trail</b>.</li>
-              <li>Multi snapshot comparison and evidence export to <b>JSON, Excel and PDF</b>.</li>
+              <li>Snapshot-based <b>change detection engine</b>: every scan is an immutable snapshot, diffed by service identity key and content fingerprint.</li>
+              <li>Governed scanning with <b>role-based access, an approval whitelist and an immutable audit trail</b>.</li>
+              <li>Multi-snapshot comparison and evidence export to <b>JSON, Excel and PDF</b>.</li>
             </ul>
           </div>
-
-          <div class="proj__block proj__block--result">
-            <span class="proj__label">Result</span>
-            <p class="proj__result">2,000+ Assets Monitored · 8 Intelligence Sources Unified</p>
+          <div class="proj__side">
+            <dl class="metrics">
+              <div><dt>Assets monitored</dt><dd>2,000+</dd></div>
+              <div><dt>Intel sources unified</dt><dd>8</dd></div>
+            </dl>
+            <ul class="tags"><li>FastAPI</li><li>React</li><li>TypeScript</li><li>PostgreSQL</li><li>Shodan</li><li>OSINT</li></ul>
           </div>
-
-          <ul class="tags">
-            <li>FastAPI</li><li>React</li><li>TypeScript</li><li>Shodan</li><li>OSINT</li><li>PostgreSQL</li>
-          </ul>
         </div>
       </article>
 
-      <article class="proj reveal">
-        <div class="proj__head">
-          <div class="proj__id">
-            <span class="proj__kind">// Applied AI</span>
-            <h3 class="proj__name">Explainable Deepfake Detection</h3>
-            <p class="proj__sub">Final Year Project · Explainable AI For Visual Forensics</p>
-          </div>
-          <span class="proj__badge">2025–2026 · FYP</span>
-          <span class="proj__repo proj__repo--private"><i>🔒</i> Private Repo</span>
+      <article class="proj proj--wide reveal">
+        <div class="proj__bar">
+          <span class="proj__path">~/projects/<b>deepfake-xai</b></span>
+          <span class="proj__year">2025–2026 · FYP</span>
+          <span class="repo repo--private"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Private repo</span>
         </div>
-        <div class="proj__body">
-          <p class="proj__desc">
-            An end to end deepfake detection pipeline that doesn't just decide, it <b>shows its reasoning</b>,
-            bringing transparency and forensic trust to AI driven media authentication.
-          </p>
-
-          <div class="proj__block">
-            <span class="proj__label">Highlights</span>
+        <div class="proj__grid">
+          <div class="proj__main">
+            <p class="proj__kind">[2] applied ai</p>
+            <h3 class="proj__name">Explainable Deepfake Detection</h3>
+            <p class="proj__sub">Final-year project · explainable AI for visual forensics</p>
+            <p class="proj__desc">
+              An end-to-end deepfake detection pipeline that doesn't just decide, it <b>shows its reasoning</b>, bringing
+              transparency and forensic trust to AI-driven media authentication.
+            </p>
             <ul class="proj__points">
               <li><b>ResNet-18 (PyTorch)</b> classifier with <b>YOLOv8</b> automated face extraction.</li>
               <li><b>Grad-CAM++</b> explainability heatmaps that visualise every decision.</li>
-              <li>Deployed on Streamlit for interactive, evidence backed authentication.</li>
+              <li>Deployed on Streamlit for interactive, evidence-backed authentication.</li>
               <li>Validated on a balanced benchmark dataset with strong generalisation.</li>
             </ul>
           </div>
-
-          <div class="proj__block proj__block--result">
-            <span class="proj__label">Result</span>
-            <p class="proj__result">95.45% Accuracy · 0.9988 AUC-ROC · 87.50 SUS</p>
+          <div class="proj__side">
+            <dl class="metrics">
+              <div><dt>Accuracy</dt><dd>95.45%</dd></div>
+              <div><dt>AUC-ROC</dt><dd>0.9988</dd></div>
+              <div><dt>SUS usability</dt><dd>87.50</dd></div>
+            </dl>
+            <ul class="tags"><li>PyTorch</li><li>YOLOv8</li><li>Grad-CAM++</li><li>Streamlit</li><li>XAI</li></ul>
           </div>
-
-          <ul class="tags">
-            <li>PyTorch</li><li>YOLOv8</li><li>Grad-CAM++</li><li>Streamlit</li><li>XAI</li>
-          </ul>
         </div>
       </article>
 
       <article class="proj reveal">
-        <div class="proj__head">
-          <div class="proj__id">
-            <span class="proj__kind">// CTF Design</span>
-            <h3 class="proj__name">DIV:IDE CTF 2026 · RE Challenges</h3>
-            <p class="proj__sub">Challenge Author · Reverse Engineering Track</p>
-          </div>
-          <span class="proj__badge">2026</span>
-          <span class="proj__repo proj__repo--private"><i>🔒</i> Private Repo</span>
+        <div class="proj__bar">
+          <span class="proj__path">~/projects/<b>divide-re</b></span>
+          <span class="proj__year">2026</span>
+          <span class="repo repo--private"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Private</span>
         </div>
-        <div class="proj__body">
+        <div class="proj__main">
+          <p class="proj__kind">[3] ctf design</p>
+          <h3 class="proj__name">DIV:IDE CTF 2026 · RE track</h3>
+          <p class="proj__sub">Challenge author · reverse engineering</p>
           <p class="proj__desc">
-            Crossed over from competitor to creator. Designed and built the reverse engineering challenges for
-            UNITEN's flagship CTF, calibrating difficulty so each puzzle makes players think like an attacker.
+            Crossed over from competitor to creator: designed and built the reverse engineering challenges for UNITEN's
+            flagship CTF, calibrating difficulty so each puzzle makes players think like an attacker.
           </p>
-
-          <div class="proj__block">
-            <span class="proj__label">Highlights</span>
-            <ul class="proj__points">
-              <li>Authored the <b>reverse engineering track</b> for UNITEN's flagship DIV:IDE CTF.</li>
-              <li>Engineered and obfuscated binaries in <b>Ghidra</b>, verifying every flag path is clean and solvable.</li>
-              <li>Tuned the <b>difficulty curve</b> so each challenge rewards attacker style thinking.</li>
-            </ul>
-          </div>
-
-          <ul class="tags">
-            <li>Reverse Engineering</li><li>Ghidra</li><li>Challenge Design</li>
+          <ul class="proj__points">
+            <li>Engineered and obfuscated binaries in <b>Ghidra</b>, verifying every flag path is clean and solvable.</li>
+            <li>Tuned the <b>difficulty curve</b> so each challenge rewards attacker-style thinking.</li>
           </ul>
+          <ul class="tags"><li>Reverse Engineering</li><li>Ghidra</li><li>Challenge Design</li></ul>
         </div>
       </article>
 
       <article class="proj reveal">
-        <div class="proj__head">
-          <div class="proj__id">
-            <span class="proj__kind">// Web</span>
-            <h3 class="proj__name">This Portfolio</h3>
-            <p class="proj__sub">Hand Built Single Page App On GitHub Pages</p>
-          </div>
-          <span class="proj__badge">2026</span>
-          <a class="proj__repo proj__repo--public" href="https://github.com/megatmuhammadfawwaz/megatmuhammadfawwaz.github.io" target="_blank" rel="noopener noreferrer"><i>🌐</i> Public · Source ↗</a>
+        <div class="proj__bar">
+          <span class="proj__path">~/projects/<b>portfolio</b></span>
+          <span class="proj__year">2026</span>
+          <a class="repo repo--public" href="https://github.com/megatmuhammadfawwaz/megatmuhammadfawwaz.github.io" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>Source ↗</a>
         </div>
-        <div class="proj__body">
+        <div class="proj__main">
+          <p class="proj__kind">[4] web</p>
+          <h3 class="proj__name">This portfolio</h3>
+          <p class="proj__sub">Operator-console single page, zero frameworks</p>
           <p class="proj__desc">
-            The site you're on. A terminal inspired single page app with no framework, tuned for speed and a
-            deliberately bold aesthetic.
+            The site you're on: an interactive terminal and command palette in vanilla JavaScript, built to be fast,
+            accessible and hardened like production.
           </p>
-
-          <div class="proj__block">
-            <span class="proj__label">Highlights</span>
-            <ul class="proj__points">
-              <li>Framework free <b>single page app</b> with a custom client side view router and blur transitions.</li>
-              <li>Terminal boot sequence and a live <b>network node canvas</b> hand built in vanilla JavaScript.</li>
-              <li>Hardened with a strict <b>Content Security Policy</b> and view only certificate protection.</li>
-            </ul>
-          </div>
-
-          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Canvas</li></ul>
+          <ul class="proj__points">
+            <li>Strict <b>Content Security Policy</b> with no inline script or style, plus <b>Subresource Integrity</b> on third-party code.</li>
+            <li>Allowlist deploy pipeline, <b>SHA-pinned</b> GitHub Actions and a published <b>security.txt</b>.</li>
+          </ul>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>CSP</li></ul>
         </div>
       </article>
 
@@ -332,180 +335,160 @@
   </div>
 </section>
 
-<!-- ══ VIEW: CTF ══ -->
-<section class="view" data-view="ctf">
-  <div class="section">
-    <p class="eyebrow"><span>~/ctf $</span> tail -f capture.log</p>
-    <h2 class="h2 section__lead">CTF Log.</h2>
-    <p class="section__note">17 Competitions Played · Full Log:</p>
+<!-- ══ CTF ══ -->
+<section class="section" id="ctf" aria-labelledby="ctfTitle">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker"><span>03</span> ~/ctf <em>$ tail -n 17 capture.log</em></p>
+      <h2 class="h2" id="ctfTitle">CTF scoreboard.</h2>
+    </header>
 
-    <div class="ctf reveal">
-      <div class="ctf__row ctf__row--pod"><span class="ctf__rank">FINALIST</span><span class="ctf__event">UMCS 2026</span><span class="ctf__org">Universiti Malaya</span></div>
-      <div class="ctf__row ctf__row--pod"><span class="ctf__rank">5TH</span><span class="ctf__event">HACK10 International CTF 2026</span><span class="ctf__org">UNITEN</span></div>
-      <div class="ctf__row"><span class="ctf__rank">42 / 234</span><span class="ctf__event">Redshift.ZeroPlusCTF 2026</span><span class="ctf__org">Redshift</span></div>
-      <div class="ctf__row"><span class="ctf__rank">124 / 1359</span><span class="ctf__event">0xFUN CTF 2026</span><span class="ctf__org">0xFUN</span></div>
-      <div class="ctf__row"><span class="ctf__rank">83 / 893</span><span class="ctf__event">Pragyan CTF 2026</span><span class="ctf__org">Pragyan</span></div>
-      <div class="ctf__row"><span class="ctf__rank">161 / 890</span><span class="ctf__event">KnightCTF 2026</span><span class="ctf__org">Knight Squad</span></div>
-      <div class="ctf__row"><span class="ctf__rank">COMPETED</span><span class="ctf__event">TAMING iCTF 2026</span><span class="ctf__org">UiTM Jasin</span></div>
-      <div class="ctf__row"><span class="ctf__rank">79 / 401</span><span class="ctf__event">FlashCTF 2026</span><span class="ctf__org">SkillBit</span></div>
-      <div class="ctf__row"><span class="ctf__rank">7TH</span><span class="ctf__event">Flag Rush Monthly CTF 2025</span><span class="ctf__org">Exploit3rs</span></div>
-      <div class="ctf__row ctf__row--pod"><span class="ctf__rank">FINALIST</span><span class="ctf__event">iGOH 2025</span><span class="ctf__org">UniKL MIIT</span></div>
-      <div class="ctf__row"><span class="ctf__rank">18TH</span><span class="ctf__event">BingoCTF 2025</span><span class="ctf__org">FSEC APU</span></div>
-      <div class="ctf__row"><span class="ctf__rank">17 / 80</span><span class="ctf__event">Curtin University CTF 2025</span><span class="ctf__org">Curtin University</span></div>
-      <div class="ctf__row"><span class="ctf__rank">COMPETED</span><span class="ctf__event">iBOH 2025</span><span class="ctf__org">Asia Pacific University</span></div>
-      <div class="ctf__row ctf__row--win"><span class="ctf__rank">CHAMPION</span><span class="ctf__event">PitchCraft CTF 2025</span><span class="ctf__org">UNITEN</span></div>
-      <div class="ctf__row"><span class="ctf__rank">27 / 81</span><span class="ctf__event">SunCTF 2025</span><span class="ctf__org">Sunway University</span></div>
-      <div class="ctf__row"><span class="ctf__rank">15TH</span><span class="ctf__event">BlackBerry CTF 2025</span><span class="ctf__org">BlackBerry CCoE</span></div>
-      <div class="ctf__row ctf__row--win"><span class="ctf__rank">CHAMPION</span><span class="ctf__event">DIV:IDE CTF 2025</span><span class="ctf__org">UNITEN</span></div>
+    <ul class="ctf-sum reveal" aria-label="CTF summary">
+      <li><b>17</b><span>events played</span></li>
+      <li class="is-win"><b>2</b><span>championships</span></li>
+      <li class="is-final"><b>2</b><span>finals reached</span></li>
+      <li class="is-final"><b>5th</b><span>HACK10 international</span></li>
+    </ul>
+
+    <div class="board reveal">
+      <div class="board__tools" id="ctfFilters" role="group" aria-label="Filter results" hidden>
+        <button type="button" data-filter="all" aria-pressed="true">all <span>17</span></button>
+        <button type="button" data-filter="top" aria-pressed="false">top placings <span>6</span></button>
+        <button type="button" data-filter="2026" aria-pressed="false">2026 <span>8</span></button>
+        <button type="button" data-filter="2025" aria-pressed="false">2025 <span>9</span></button>
+      </div>
+
+      <table class="board__table" id="ctfTable">
+        <caption class="sr-only">CTF competition results, most recent first</caption>
+        <thead><tr><th scope="col">Result</th><th scope="col">Event</th><th scope="col">Organiser</th><th scope="col">Standing</th></tr></thead>
+        <tbody>
+          <tr data-year="2026" data-top="1" class="is-final"><td><span class="rk">Finalist</span></td><td>UMCS 2026</td><td>Universiti Malaya</td><td class="pc">national final</td></tr>
+          <tr data-year="2026" data-top="1" class="is-final"><td><span class="rk">5th</span></td><td>HACK10 International CTF 2026</td><td>UNITEN</td><td class="pc">international final</td></tr>
+          <tr data-year="2026"><td><span class="rk">42 / 234</span></td><td>Redshift.ZeroPlusCTF 2026</td><td>Redshift</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="82" height="4"/></svg>top 18%</td></tr>
+          <tr data-year="2026"><td><span class="rk">124 / 1359</span></td><td>0xFUN CTF 2026</td><td>0xFUN</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="91" height="4"/></svg>top 10%</td></tr>
+          <tr data-year="2026"><td><span class="rk">83 / 893</span></td><td>Pragyan CTF 2026</td><td>Pragyan</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="91" height="4"/></svg>top 10%</td></tr>
+          <tr data-year="2026"><td><span class="rk">161 / 890</span></td><td>KnightCTF 2026</td><td>Knight Squad</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="82" height="4"/></svg>top 19%</td></tr>
+          <tr data-year="2026"><td><span class="rk">Competed</span></td><td>TAMING iCTF 2026</td><td>UiTM Jasin</td><td class="pc">—</td></tr>
+          <tr data-year="2026"><td><span class="rk">79 / 401</span></td><td>FlashCTF 2026</td><td>SkillBit</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="80" height="4"/></svg>top 20%</td></tr>
+          <tr data-year="2025" data-top="1" class="is-place"><td><span class="rk">7th</span></td><td>Flag Rush Monthly CTF 2025</td><td>Exploit3rs</td><td class="pc">top 10 finish</td></tr>
+          <tr data-year="2025" data-top="1" class="is-final"><td><span class="rk">Finalist</span></td><td>iGOH 2025</td><td>UniKL MIIT</td><td class="pc">national final</td></tr>
+          <tr data-year="2025"><td><span class="rk">18th</span></td><td>BingoCTF 2025</td><td>FSEC APU</td><td class="pc">—</td></tr>
+          <tr data-year="2025"><td><span class="rk">17 / 80</span></td><td>Curtin University CTF 2025</td><td>Curtin University</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="79" height="4"/></svg>top 22%</td></tr>
+          <tr data-year="2025"><td><span class="rk">Competed</span></td><td>iBOH 2025</td><td>Asia Pacific University</td><td class="pc">—</td></tr>
+          <tr data-year="2025" data-top="1" class="is-win"><td><span class="rk">Champion</span></td><td>PitchCraft CTF 2025</td><td>UNITEN</td><td class="pc">1st place</td></tr>
+          <tr data-year="2025"><td><span class="rk">27 / 81</span></td><td>SunCTF 2025</td><td>Sunway University</td><td class="pc"><svg class="bar" viewBox="0 0 100 4" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="4"/><rect class="bar__f" width="67" height="4"/></svg>top 34%</td></tr>
+          <tr data-year="2025"><td><span class="rk">15th</span></td><td>BlackBerry CTF 2025</td><td>BlackBerry CCoE</td><td class="pc">—</td></tr>
+          <tr data-year="2025" data-top="1" class="is-win"><td><span class="rk">Champion</span></td><td>DIV:IDE CTF 2025</td><td>UNITEN</td><td class="pc">1st place</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- ══ VIEW: CERTIFICATIONS ══ -->
-<section class="view" data-view="certs">
-  <div class="section">
-    <p class="eyebrow"><span>~/certs $</span> gpg --verify credentials.sig</p>
-    <h2 class="h2 section__lead">Verified Credentials.</h2>
-    <p class="section__note">
-      Digital certificates shown for viewing only. Each is issued and independently verifiable by its awarding body.
-    </p>
+<!-- ══ CERTIFICATIONS ══ -->
+<section class="section" id="certs" aria-labelledby="certTitle">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker"><span>04</span> ~/certs <em>$ gpg --verify credentials.sig</em></p>
+      <h2 class="h2" id="certTitle">Verified credentials.</h2>
+      <p class="sec-note">Previews are watermarked and reduced in resolution. Every credential is issued by, and verifiable with, its awarding body.</p>
+    </header>
 
-    <div class="certs" id="certs">
+    <div class="certs">
 
-      <!-- API-RTA -->
       <article class="cert reveal">
-        <div class="cert__top">
-          <div class="cert__id-block">
-            <span class="cert__issuer"><i>›</i> CyberWarfare Labs</span>
-            <h3 class="cert__name">Certified API Red Team Analyst</h3>
-          </div>
-          <span class="cert__status cert__status--live">Certified</span>
-        </div>
-        <figure class="cert__frame cert__frame--api" role="img" aria-label="API-RTA certificate awarded to Megat Muhammad Fawwaz by CyberWarfare Labs, issued January 2026">
-          <span class="cert__wm" aria-hidden="true">VIEW ONLY · MEGAT FAWWAZ</span>
-          <span class="cert__guard" aria-hidden="true"></span>
-        </figure>
-        <div class="cert__foot">
-          <span class="cert__cred">ID · API-RTA-6970b03f…54639d</span>
-          <span class="cert__date">Jan 2026</span>
+        <button type="button" class="cert__shot" data-full="assets/certs/api-rta.webp" aria-label="Enlarge API Red Team Analyst certificate">
+          <img src="assets/certs/api-rta-sm.webp" width="720" height="509" loading="lazy" alt="Certified API Red Team Analyst certificate, CyberWarfare Labs, January 2026" />
+        </button>
+        <div class="cert__body">
+          <p class="cert__issuer">CyberWarfare Labs</p>
+          <h3 class="cert__name">Certified API Red Team Analyst</h3>
+          <p class="cert__foot"><span>API-RTA-6970b03f…54639d</span><span>Jan 2026</span></p>
         </div>
       </article>
 
-      <!-- Blue Team Fundamentals -->
       <article class="cert reveal">
-        <div class="cert__top">
-          <div class="cert__id-block">
-            <span class="cert__issuer"><i>›</i> CyberWarfare Labs</span>
-            <h3 class="cert__name">Certified Blue Team Fundamentals</h3>
-          </div>
-          <span class="cert__status cert__status--live">Certified</span>
-        </div>
-        <figure class="cert__frame cert__frame--blue" role="img" aria-label="Certified Blue Team Fundamentals certificate awarded to Megat Muhammad Fawwaz by CyberWarfare Labs, issued November 2025">
-          <span class="cert__wm" aria-hidden="true">VIEW ONLY · MEGAT FAWWAZ</span>
-          <span class="cert__guard" aria-hidden="true"></span>
-        </figure>
-        <div class="cert__foot">
-          <span class="cert__cred">ID · BTF-693aeb25…6fe1d5</span>
-          <span class="cert__date">Nov 2025</span>
+        <button type="button" class="cert__shot" data-full="assets/certs/blue-team.webp" aria-label="Enlarge Blue Team Fundamentals certificate">
+          <img src="assets/certs/blue-team-sm.webp" width="720" height="509" loading="lazy" alt="Certified Blue Team Fundamentals certificate, CyberWarfare Labs, November 2025" />
+        </button>
+        <div class="cert__body">
+          <p class="cert__issuer">CyberWarfare Labs</p>
+          <h3 class="cert__name">Certified Blue Team Fundamentals</h3>
+          <p class="cert__foot"><span>BTF-693aeb25…6fe1d5</span><span>Nov 2025</span></p>
         </div>
       </article>
 
-      <!-- Claude Code in Action (Anthropic) -->
       <article class="cert reveal">
-        <div class="cert__top">
-          <div class="cert__id-block">
-            <span class="cert__issuer"><i>›</i> Anthropic</span>
-            <h3 class="cert__name">Claude Code In Action</h3>
-          </div>
-          <span class="cert__status cert__status--live">Certified</span>
-        </div>
-        <figure class="cert__frame cert__frame--claude" role="img" aria-label="Claude Code in Action certificate of completion awarded to Megat Muhammad Fawwaz by Anthropic, issued March 2026">
-          <span class="cert__wm" aria-hidden="true">VIEW ONLY · MEGAT FAWWAZ</span>
-          <span class="cert__guard" aria-hidden="true"></span>
-        </figure>
-        <div class="cert__foot">
-          <span class="cert__cred">ID · rgia4omcsini</span>
-          <a class="cert__verify" href="https://verify.skilljar.com/c/rgia4omcsini" target="_blank" rel="noopener noreferrer">Verify ↗</a>
+        <button type="button" class="cert__shot" data-full="assets/certs/claude-code.webp" aria-label="Enlarge Claude Code in Action certificate">
+          <img src="assets/certs/claude-code-sm.webp" width="720" height="556" loading="lazy" alt="Claude Code in Action certificate of completion, Anthropic, March 2026" />
+        </button>
+        <div class="cert__body">
+          <p class="cert__issuer">Anthropic</p>
+          <h3 class="cert__name">Claude Code in Action</h3>
+          <p class="cert__foot"><span>rgia4omcsini</span><a href="https://verify.skilljar.com/c/rgia4omcsini" target="_blank" rel="noopener noreferrer">Verify ↗</a></p>
         </div>
       </article>
 
-      <!-- CCNAv7: Introduction to Networks -->
       <article class="cert reveal">
-        <div class="cert__top">
-          <div class="cert__id-block">
-            <span class="cert__issuer"><i>›</i> Cisco Networking Academy</span>
-            <h3 class="cert__name">CCNAv7: Introduction to Networks</h3>
-          </div>
-          <span class="cert__status cert__status--live">Certified</span>
-        </div>
-        <figure class="cert__frame cert__frame--ccna" role="img" aria-label="CCNAv7 Introduction to Networks certificate awarded to Megat Muhammad Fawwaz by Cisco Networking Academy, issued June 2024">
-          <span class="cert__wm" aria-hidden="true">VIEW ONLY · MEGAT FAWWAZ</span>
-          <span class="cert__guard" aria-hidden="true"></span>
-        </figure>
-        <div class="cert__foot">
-          <span class="cert__cred">Cisco Networking Academy</span>
-          <span class="cert__date">Jun 2024</span>
+        <button type="button" class="cert__shot" data-full="assets/certs/ccna.webp" aria-label="Enlarge CCNAv7 Introduction to Networks certificate">
+          <img src="assets/certs/ccna-sm.webp" width="720" height="488" loading="lazy" alt="CCNAv7 Introduction to Networks certificate, Cisco Networking Academy, June 2024" />
+        </button>
+        <div class="cert__body">
+          <p class="cert__issuer">Cisco Networking Academy</p>
+          <h3 class="cert__name">CCNAv7: Introduction to Networks</h3>
+          <p class="cert__foot"><span>Cisco NetAcad</span><span>Jun 2024</span></p>
         </div>
       </article>
 
-      <!-- CEH — in progress -->
       <article class="cert cert--pending reveal">
-        <div class="cert__top">
-          <div class="cert__id-block">
-            <span class="cert__issuer"><i>›</i> EC-Council</span>
-            <h3 class="cert__name">Certified Ethical Hacker (CEH)</h3>
-          </div>
-          <span class="cert__status cert__status--wip">In Progress</span>
+        <div class="cert__shot cert__shot--pending" aria-hidden="true">
+          <span class="spin">⧗</span>
+          <span>certificate pending</span>
         </div>
-        <div class="cert__frame cert__frame--pending" role="img" aria-label="Certified Ethical Hacker, EC-Council, currently in progress">
-          <span class="cert__pending-mark">⧗</span>
-          <span class="cert__pending-text">Certificate Pending</span>
-          <span class="cert__pending-sub">Coursework Underway · EC-Council</span>
-        </div>
-        <div class="cert__foot">
-          <span class="cert__cred">Expected 2026</span>
-          <span class="cert__date">EC-Council</span>
+        <div class="cert__body">
+          <p class="cert__issuer">EC-Council</p>
+          <h3 class="cert__name">Certified Ethical Hacker (CEH)</h3>
+          <p class="cert__foot"><span class="wip">In progress</span><span>Expected 2026</span></p>
         </div>
       </article>
 
     </div>
-
-    <p class="certs__guard-note">
-      <span>🔒</span> Certificates are display-only. Saving, downloading and printing are disabled; use the verify links to confirm authenticity.
-    </p>
   </div>
 </section>
 
-<!-- ══ VIEW: EXPERIENCE (+ education) ══ -->
-<section class="view" data-view="experience">
-  <div class="section">
-    <p class="eyebrow"><span>~/history $</span> git log --oneline</p>
-    <div class="hist">
+<!-- ══ EXPERIENCE + EDUCATION ══ -->
+<section class="section" id="experience" aria-labelledby="expTitle">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker"><span>05</span> ~/history <em>$ git log --oneline</em></p>
+      <h2 class="h2" id="expTitle">Experience &amp; education.</h2>
+    </header>
 
+    <div class="hist">
       <div class="hist__col reveal">
-        <h2 class="h2 section__lead">Experience.</h2>
-        <ol class="timeline">
-          <li class="tl">
-            <span class="tl__date">Jun–Sep 2026</span>
-            <h3 class="tl__role">Cybersecurity Intern (VAPT)</h3>
+        <h3 class="hist__title">experience</h3>
+        <ol class="tl">
+          <li>
+            <span class="tl__date">Jun – Sep 2026</span>
+            <h4 class="tl__role">Cybersecurity Intern (VAPT)</h4>
             <p class="tl__org">Tenaga Nasional Berhad</p>
-            <p class="tl__note">Attack surface analysis on internet facing infrastructure. Tracked 2,000+ assets and built the SURIA platform.</p>
+            <p class="tl__note">Attack surface analysis on internet-facing infrastructure. Tracked 2,000+ assets and built the SURIA platform.</p>
           </li>
-          <li class="tl">
+          <li>
             <span class="tl__date">Nov 2025 – Present</span>
-            <h3 class="tl__role">Committee Member, CLICQ DIV:IDE</h3>
+            <h4 class="tl__role">Committee Member, CLICQ DIV:IDE</h4>
             <p class="tl__org">CLICQ IT Society, UNITEN</p>
-            <p class="tl__note">Part of the official CTF team and authored reverse engineering challenges for DIV:IDE CTF 2026.</p>
+            <p class="tl__note">Part of the official CTF team; authored the reverse engineering challenges for DIV:IDE CTF 2026.</p>
           </li>
-          <li class="tl">
+          <li>
             <span class="tl__date">Nov 2023 – Nov 2024</span>
-            <h3 class="tl__role">President</h3>
+            <h4 class="tl__role">President</h4>
             <p class="tl__org">CLICQ IT Society, UNITEN</p>
             <p class="tl__note">Led the society and delivered 10+ programmes with partners including PETRONAS, Deloitte and HILTI.</p>
           </li>
-          <li class="tl">
+          <li>
             <span class="tl__date">2022 – 2025</span>
-            <h3 class="tl__role">Treasurer → Strategic Planner</h3>
+            <h4 class="tl__role">Treasurer → Strategic Planner</h4>
             <p class="tl__org">CLICQ IT Society, UNITEN</p>
             <p class="tl__note">Three years across finance, planning and event leadership before the cybersecurity division.</p>
           </li>
@@ -513,47 +496,58 @@
       </div>
 
       <div class="hist__col reveal">
-        <h2 class="h2 section__lead">Education.</h2>
-        <ol class="timeline">
-          <li class="tl">
+        <h3 class="hist__title">education</h3>
+        <ol class="tl">
+          <li>
             <span class="tl__date">2023 – 2026</span>
-            <h3 class="tl__role">BSc Computer Science (Cyber Security), Hons.</h3>
+            <h4 class="tl__role">BSc Computer Science (Cyber Security), Hons.</h4>
             <p class="tl__org">Universiti Tenaga Nasional</p>
             <p class="tl__note">CGPA 3.90 · Dean's List every semester · MUET Band 4.</p>
           </li>
-          <li class="tl">
+          <li>
             <span class="tl__date">2022 – 2023</span>
-            <h3 class="tl__role">Foundation In Computer Science</h3>
+            <h4 class="tl__role">Foundation in Computer Science</h4>
             <p class="tl__org">Universiti Tenaga Nasional</p>
             <p class="tl__note">CGPA 3.98 · Dean's List every semester.</p>
           </li>
-          <li class="tl">
+          <li>
             <span class="tl__date">2017 – 2022</span>
-            <h3 class="tl__role">SPM · 5A+ 4A</h3>
+            <h4 class="tl__role">SPM · 5A+ 4A</h4>
             <p class="tl__org">MRSM Tumpat, Kelantan</p>
             <p class="tl__note">Yayasan Khazanah Watan Scholar since 2022.</p>
           </li>
         </ol>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══ VIEW: CONTACT ══ -->
-<section class="view" data-view="contact">
-  <div class="section section--contact">
-    <p class="eyebrow"><span>~/contact $</span> ./connect.sh</p>
-    <h2 class="contact__lead">Let's Talk Security.</h2>
-    <p class="contact__sub">
-      Open to graduate programme and junior roles in security operations, penetration testing, digital
-      forensics and incident response. Best reached on LinkedIn.
-    </p>
-    <div class="contact__grid">
-      <a class="contact__card reveal" href="https://www.linkedin.com/in/megatmuhammadfawwaz/" target="_blank" rel="noopener">
-        <span class="contact__k">LinkedIn</span>
-        <span class="contact__v">in/megatmuhammadfawwaz ↗</span>
-      </a>
+<!-- ══ CONTACT ══ -->
+<section class="section section--contact" id="contact" aria-labelledby="contactTitle">
+  <div class="wrap">
+    <div class="contact reveal">
+      <p class="kicker"><span>06</span> ~/contact <em>$ ./connect.sh</em></p>
+      <h2 class="contact__title" id="contactTitle">Let's talk security<span class="hero__caret" aria-hidden="true">_</span></h2>
+      <p class="contact__sub">
+        Open to graduate programmes and junior roles in penetration testing, security operations, digital forensics and
+        incident response.
+      </p>
+      <div class="contact__actions">
+        <a class="btn btn--solid" href="https://www.linkedin.com/in/megatmuhammadfawwaz/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg>
+          Connect on LinkedIn ↗
+        </a>
+        <span class="mail" id="mail" hidden>
+          <a class="btn btn--ghost" id="mailLink" href="#contact">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+            <span id="mailText">Email</span>
+          </a>
+          <button type="button" class="btn btn--icon" id="mailCopy" aria-label="Copy email address">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+          </button>
+        </span>
+      </div>
+      <p class="contact__note" id="copyNote" role="status"></p>
     </div>
   </div>
 </section>
@@ -562,30 +556,34 @@
 
 <!-- ══ FOOTER ══ -->
 <footer class="foot">
-  <div class="foot__mini">
-    <p class="foot__maint">
-      This website is maintained by <b>Megat Muhammad Fawwaz</b>.
-    </p>
-    <p class="foot__contact">
-      Anything?
-      <a href="https://www.linkedin.com/in/megatmuhammadfawwaz/" target="_blank" rel="noopener noreferrer">Contact me ↗</a>
-    </p>
-    <ul class="foot__notes">
-      <li>Privacy-first with cookieless analytics via GoatCounter.</li>
-      <li>No personal data collected.</li>
-      <li>No cookies.</li>
-    </ul>
-    <p class="foot__copy">
-      <span class="foot__built">Built For View-Only <span class="blink">_</span></span>
-      <span class="foot__year">© <span id="year">2026</span></span>
-    </p>
+  <div class="wrap foot__row">
+    <p>Built and maintained by <b>Megat Muhammad Fawwaz</b> · © <span id="year">2026</span></p>
+    <p class="foot__priv">Cookieless analytics via GoatCounter · no personal data collected · <a href="/.well-known/security.txt">security.txt</a></p>
   </div>
 </footer>
 
-<script src="js/main.js?v=4"></script>
+<!-- ══ COMMAND PALETTE ══ -->
+<dialog class="palette" id="palette" aria-label="Command menu">
+  <div class="palette__box">
+    <div class="palette__input">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="paletteInput" type="text" role="combobox" aria-expanded="true" aria-controls="paletteList" aria-autocomplete="list" placeholder="Jump to a section or run an action…" spellcheck="false" autocomplete="off" />
+      <kbd>esc</kbd>
+    </div>
+    <ul class="palette__list" id="paletteList" role="listbox" aria-label="Commands"></ul>
+    <p class="palette__foot"><span><kbd>↑</kbd><kbd>↓</kbd> navigate</span><span><kbd>↵</kbd> select</span><span><kbd>esc</kbd> close</span></p>
+  </div>
+</dialog>
 
-<!-- GoatCounter — privacy-first, cookieless, no individual visitor tracking -->
-<script data-goatcounter="https://megatmuhammadfawwaz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-<!-- End GoatCounter -->
+<!-- ══ CERTIFICATE LIGHTBOX ══ -->
+<dialog class="lightbox" id="lightbox" aria-label="Certificate preview">
+  <button type="button" class="lightbox__close" id="lightboxClose" aria-label="Close preview">×</button>
+  <img id="lightboxImg" alt="" />
+</dialog>
+
+<script src="js/main.js?v=10" defer></script>
+
+<!-- GoatCounter: cookieless, no individual tracking. Pinned version + SRI. -->
+<script data-goatcounter="https://megatmuhammadfawwaz.goatcounter.com/count" async src="https://gc.zgo.at/count.v4.js" integrity="sha384-nRw6qfbWyJha9LhsOtSb2YJDyZdKvvCFh0fJYlkquSFjUxp9FVNugbfy8q1jdxI+" crossorigin="anonymous"></script>
 </body>
 </html>

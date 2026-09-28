@@ -15,3 +15,6 @@ Thumbs.db
 .playwright-mcp/
 live-certs.png
 ccna-frame-only.png
+
+# Original full-resolution images (never published; site uses watermarked previews)
+_private/
