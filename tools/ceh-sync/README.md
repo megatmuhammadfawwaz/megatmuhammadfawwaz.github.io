@@ -1,6 +1,6 @@
 # CEH accounts and progress sync
 
-Status: implemented locally and connected to the hosted project `cbkhisehgxnuadoitono` (CEH Quiz Progress, Singapore). The schema and authentication settings are applied, and real hosted account isolation and cross-browser resume tests passed. The existing live site is unchanged pending the owner's review and approval.
+Status: published to the owner's portfolio after review approval on 2026-10-07 and connected to the hosted project `cbkhisehgxnuadoitono` (CEH Quiz Progress, Singapore). The schema and authentication settings are applied. Real hosted account isolation and cross-browser resume tests passed, and the deployed files match the reviewed build. The owner's personal account creation and existing-browser migration are the remaining user steps.
 
 The encrypted question vault and its passphrase are unchanged. Supabase Auth identifies each person, and the database stores one private progress snapshot per account. No questionnaire content, vault key, passphrase, or account password is stored in the progress table.
 
@@ -13,7 +13,7 @@ The encrypted question vault and its passphrase are unchanged. Supabase Auth ide
 5. Put only the project URL and public publishable key in `ceh/sync-config.js`. Never use a secret or service-role key in the browser.
 6. Run `node tools/ceh-sync/validate-config.cjs` and the tests. Review the local preview before publishing. Pushing main automatically deploys the site.
 
-The URL, schema, public key, and approved authentication settings above are already configured. `passwordResetEnabled` is false in the browser configuration, so the UI does not offer unavailable reset emails. Enable it only after verifying email delivery. Remove the temporary localhost redirect after deployment verification. Do not commit account tokens, database passwords, test-account passwords, or the owner's progress backup to the website repository.
+The URL, schema, public key, and approved authentication settings above are already configured. `passwordResetEnabled` is false in the browser configuration, so the UI does not offer unavailable reset emails. Enable it only after verifying email delivery. The temporary localhost redirect was removed after deployment verification; only the public CEH redirect remains. Do not commit account tokens, database passwords, test-account passwords, or the owner's progress backup to the website repository.
 
 ## Existing owner migration
 
@@ -35,7 +35,7 @@ Only a previously loaded account can continue from a cached save when its databa
 
 The database schema was additionally executed against local PostgreSQL using PGlite, testing anonymous denial, account isolation, attempted cross-account writes, invalid payloads, forbidden deletion, and stale revisions. Isolated browser tests verified the owner's backup with mocked cloud transport, conflicts, real quiz answers, and mobile layout.
 
-Live tests against the hosted project verified immediate signup without sending email, password sign-in, private account saves, denied cross-account access, revision conflicts, a real quiz answer syncing, and resume in another isolated browser using the real vendored SDK. Only dummy progress was uploaded to two temporary accounts. The owner's real progress has not been uploaded or migrated. The temporary account IDs are recorded in the review workspace for cleanup after approval. Actual public-site deployment and the owner's migration are still pending.
+Live tests against the hosted project verified immediate signup without sending email, password sign-in, private account saves, denied cross-account access, revision conflicts, a real quiz answer syncing, and resume in another isolated browser using the real vendored SDK. Only dummy progress was uploaded to two temporary accounts, which were removed after the owner's approval. The public deployment succeeded, nine deployed files match the reviewed build, and the vault decrypts in the published page with the existing passphrase. The owner's real progress has not been uploaded or migrated; it remains in the existing Opera profile with a separate backup in the review workspace.
 
 To reproduce both automated suites, run `npm ci` and `npm test` from `tools/ceh-sync/`. PGlite creates an isolated in-memory PostgreSQL database; it does not contact or change a hosted database.
 
