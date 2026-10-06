@@ -26,6 +26,10 @@ jobs:
 
       # Allowlist: only these paths are published. Anything else in the
       # repo (tooling config, notes, originals) never reaches the site.
+      - name: Validate CEH account configuration
+        if: ${{ hashFiles('ceh/sync-config.js') != '' }}
+        run: node tools/ceh-sync/validate-config.cjs
+
       - name: Assemble public site
         run: |
           set -euo pipefail

@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Private study page. The quiz renders progress bars with inline style
      widths, so this page (only) allows inline styles. No inline script. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>CEH v13 Quiz Trainer · private</title>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="unlock.css">
+<link rel="stylesheet" href="progress-sync.css">
 </head>
 <body>
 
@@ -64,6 +65,10 @@
 <input type="file" id="import-file" accept="application/json,.json" hidden>
 
 <script src="vault.js"></script>
-<script src="unlock.js"></script>
+<script src="vendor/supabase-2.117.2.js"></script>
+<script src="sync-config.js"></script>
+<script src="progress-store.js"></script>
+<script src="progress-sync.js"></script>
+<script src="unlock.js?v=accounts-2"></script>
 </body>
 </html>

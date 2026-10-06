@@ -1,0 +1,18 @@
+.sync-bar {max-width:980px;width:100%;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;color:var(--text-dim);font-size:13px;border-bottom:1px solid var(--border)}
+.sync-bar button,.sync-panel button,.sync-conflict button {font:inherit;color:var(--text);background:var(--panel-2);border:1px solid var(--border);border-radius:9px;padding:10px 14px;cursor:pointer}
+.sync-bar button:hover,.sync-panel button:hover,.sync-conflict button:hover {border-color:var(--accent)}
+.sync-panel button:disabled {opacity:.5;cursor:not-allowed}
+.sync-panel {color:var(--text);background:var(--bg-soft);border:1px solid var(--border);border-radius:18px;width:min(540px,calc(100% - 28px));max-height:90vh;padding:26px;box-shadow:var(--shadow)}
+.sync-panel::backdrop {background:rgba(0,0,0,.7)}
+.sync-panel-head {display:flex;align-items:center;justify-content:space-between;gap:12px}.sync-panel h2 {margin:0;font-size:22px}.sync-panel h3 {font-size:16px}
+.sync-panel p {font-size:14px;line-height:1.6;overflow-wrap:anywhere}.sync-hint {color:var(--text-dim)}
+.sync-panel label {display:block;margin:14px 0 7px;font-size:14px}
+.sync-panel input {width:100%;padding:12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:9px;font:inherit}
+.sync-panel fieldset {border:0;padding:0;margin:0;min-width:0}
+.sync-panel :focus-visible,.sync-conflict button:focus-visible,.sync-bar button:focus-visible {outline:2px solid var(--accent);outline-offset:3px}
+.sync-actions {display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}#sync-sign-in,#sync-claim {background:var(--accent-2);border-color:var(--accent-2)}
+.sync-backups {padding-top:16px;border-top:1px solid var(--border)}
+.sync-notice,.sync-conflict {background:rgba(245,185,66,.1);border:1px solid var(--warn);border-radius:12px;padding:14px}
+.sync-conflict {max-width:940px;margin:16px auto;color:var(--text)}.sync-conflict h2 {font-size:18px;margin-top:0}.sync-conflict p {line-height:1.6}.sync-error {color:var(--bad)}
+[hidden] {display:none !important}.sync-blocked #view-root {pointer-events:none;opacity:.45;user-select:none}
+@media(max-width:600px) {.sync-bar {align-items:flex-start}.sync-bar button {flex-shrink:0}.sync-panel {padding:20px}.sync-conflict {margin:14px 20px}.sync-actions button {flex-grow:1}}

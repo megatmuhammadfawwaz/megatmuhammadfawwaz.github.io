@@ -79,6 +79,7 @@
   ];
 
   function loadProgress() {
+    if (window.CEHProgress) return window.CEHProgress.getProgress();
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
     } catch (e) {
@@ -86,6 +87,7 @@
     }
   }
   function saveProgress() {
+    if (window.CEHProgress) { window.CEHProgress.saveProgress(PROGRESS); return; }
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(PROGRESS));
     } catch (e) { /* ignore quota/private-mode errors */ }
@@ -115,6 +117,7 @@
     return s;
   }
   function loadStats() {
+    if (window.CEHProgress) return normalizeStats(window.CEHProgress.getStats());
     try {
       return normalizeStats(JSON.parse(localStorage.getItem(STATS_KEY)));
     } catch (e) {
@@ -122,6 +125,7 @@
     }
   }
   function saveStats() {
+    if (window.CEHProgress) { window.CEHProgress.saveStats(STATS); return; }
     try {
       localStorage.setItem(STATS_KEY, JSON.stringify(STATS));
     } catch (e) { /* ignore quota/private-mode errors */ }
@@ -1339,11 +1343,15 @@
       } catch (e) {
         data = null;
       }
-      if (!data || typeof data.stats !== 'object' || typeof data.progress !== 'object') {
+      var valid = data && data.stats && data.progress &&
+        typeof data.stats === 'object' && typeof data.progress === 'object' &&
+        !Array.isArray(data.stats) && !Array.isArray(data.progress);
+      if (!valid || (window.CEHStore && !window.CEHStore.valid(data))) {
         toast('<span class="t-icon">⚠️</span><div><b>Not a valid quiz backup</b></div>', 'bad');
         return;
       }
       if (!confirm('Replace your current progress and scoreboard with this backup from ' + (data.exportedAt ? fmtDate(Date.parse(data.exportedAt)) : 'an unknown date') + '?')) return;
+      if (window.CEHProgress) window.CEHProgress.backup('Before importing a quiz backup');
       PROGRESS = data.progress || {};
       STATS = normalizeStats(data.stats);
       STATS.migrated = true;
@@ -1365,6 +1373,7 @@
     var btn = e.target.closest('[data-action]');
     if (!btn || btn.disabled) return;
     var action = btn.dataset.action;
+    if (window.CEHProgress && window.CEHProgress.isBlocked()) return;
     var cat = btn.dataset.cat;
     if (btn.tagName === 'A') e.preventDefault();
     switch (action) {
@@ -1461,6 +1470,7 @@
   }
 
   function handleGlobalKeydown(e) {
+    if (window.CEHProgress && window.CEHProgress.isBlocked()) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     var tag = e.target && e.target.tagName;
     if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
@@ -1483,6 +1493,7 @@
 
   // Another tab saved progress: adopt it so this tab's stale copy never overwrites it.
   function handleStorage(e) {
+    if (window.CEHProgress && e.type === 'storage') return;
     if (e.key !== STORAGE_KEY && e.key !== STATS_KEY && e.key !== null) return;
     PROGRESS = loadProgress();
     STATS = loadStats();
@@ -1508,10 +1519,20 @@
   window.addEventListener('scroll', hideTip, true);
   window.addEventListener('resize', handleResize);
   window.addEventListener('storage', handleStorage);
+  window.addEventListener('ceh-progress-changed', function () { handleStorage({key:null}); });
+  window.addEventListener('ceh-save-state', function (e) {
+    document.getElementById('app').classList.toggle('sync-blocked', e.detail.blocked);
+    document.getElementById('view-root').inert = e.detail.blocked;
+  });
 
   // ---------- init ----------
-  migrateFromProgress();
-  if (STATS.activeRun) endRun(); // a tab closed mid-run: bank it on the scoreboard
+  if (window.CEHProgress && window.CEHProgress.isBlocked()) {
+    document.getElementById('app').classList.add('sync-blocked');
+    document.getElementById('view-root').inert = true;
+  } else {
+    migrateFromProgress();
+    if (STATS.activeRun) endRun();
+  }
   renderFooter();
   renderHome();
   celebrate();

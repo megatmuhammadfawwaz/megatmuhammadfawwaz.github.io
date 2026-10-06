@@ -1,0 +1,10 @@
+{
+  "name": "ceh-sync-validation",
+  "private": true,
+  "scripts": {
+    "test": "node --test progress-store.test.cjs && node rls.test.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8"
+  }
+}

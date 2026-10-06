@@ -9,16 +9,24 @@
   var btn = document.getElementById("vaultBtn");
   var msg = document.getElementById("vaultMsg");
 
-  function start(data) {
+  async function start(data) {
+    try {
+      if (window.CEHProgress) await window.CEHProgress.init();
+    } catch (err) {
+      btn.disabled = true;
+      say('Progress could not load: ' + (err.message || 'Please reload and try again.'), true);
+      return;
+    }
     window.CEH_DATA = data;
     vault.remove();
     document.getElementById("app").hidden = false;
-    document.getElementById("vaultLock").addEventListener("click", function () {
+    document.getElementById("vaultLock").addEventListener("click", async function () {
+      if (window.CEHProgress) await window.CEHProgress.flush();
       window.CEHVault.lock();
       location.href = "../";
     });
     var s = document.createElement("script");
-    s.src = "app.js";
+    s.src = "app.js?v=accounts-2";
     document.body.appendChild(s);
   }
 
