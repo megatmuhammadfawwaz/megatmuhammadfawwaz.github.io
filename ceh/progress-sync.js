@@ -23,6 +23,8 @@
     el('sync-identity').textContent=user ? 'Signed in as '+user.email : 'Continue your progress on any computer';
     el('sync-auth-form').hidden=!!user; el('sync-signed-in').hidden=!user;
     el('sync-not-configured').hidden=configured; el('sync-auth-fields').disabled=!configured;
+    el('sync-forgot').hidden=config.passwordResetEnabled!==true;
+    el('sync-reset-notice').hidden=!configured || config.passwordResetEnabled===true;
     el('sync-claim').hidden=!store.canClaim(); el('sync-existing').hidden=!store.canClaim();
     el('sync-account-status').textContent=store.getStatus(); el('sync-conflict').hidden=!store.getConflict();
     statusEl.title=store.getError() ? store.getError().message : '';
@@ -42,6 +44,7 @@
       '<form id="sync-auth-form"><fieldset id="sync-auth-fields"><label for="sync-email">Email</label><input id="sync-email" type="email" autocomplete="username" required maxlength="254">'+
       '<label for="sync-password">Account password</label><input id="sync-password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required>'+
       '<div class="sync-actions"><button type="submit" id="sync-sign-in">Sign in</button><button type="button" id="sync-sign-up">Create account</button><button type="button" id="sync-forgot">Forgot password</button></div></fieldset></form>'+
+      '<p id="sync-reset-notice" class="sync-hint" hidden>Keep your account password safe. Email password resets are not available yet.</p>'+
       '<div id="sync-signed-in" hidden><p id="sync-account-status"></p><div id="sync-existing"><h3>Keep the progress already on this PC</h3><p>If the existing browser progress is yours, attach it to this account. A backup is kept first.</p></div>'+
       '<div class="sync-actions"><button id="sync-claim" type="button">Keep my existing progress</button><button id="sync-now" type="button">Sync now</button><button id="sync-sign-out" type="button">Sign out</button></div></div>'+
       '<form id="sync-recovery" hidden><label for="sync-new-password">New account password</label><input id="sync-new-password" type="password" autocomplete="new-password" minlength="8" maxlength="128" required><button type="submit">Save new password</button></form>'+
@@ -72,6 +75,7 @@
     el('sync-auth-form').onsubmit=function (e) {e.preventDefault();authenticate(false);};
     el('sync-sign-up').onclick=function () {authenticate(true);};
     el('sync-forgot').onclick=async function () {
+      if(!configured || config.passwordResetEnabled!==true) return;
       if(!el('sync-email').reportValidity()) return;
       var result=await client.auth.resetPasswordForEmail(el('sync-email').value.trim(),{redirectTo:new URL('index.html',location.href).href});
       if(result.error) fail(result.error);else message('Check your email for a password reset link.');
