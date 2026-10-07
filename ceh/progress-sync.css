@@ -13,6 +13,7 @@
 .sync-actions {display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}#sync-sign-in,#sync-claim {background:var(--accent-2);border-color:var(--accent-2)}
 .sync-backups {padding-top:16px;border-top:1px solid var(--border)}
 .sync-notice,.sync-conflict {background:rgba(245,185,66,.1);border:1px solid var(--warn);border-radius:12px;padding:14px}
+.sync-storage-notice {max-width:940px;margin:16px auto;padding:14px;border:1px solid var(--warn);border-radius:12px;background:rgba(245,185,66,.1);color:var(--text);font-size:14px;line-height:1.6}
 .sync-conflict {max-width:940px;margin:16px auto;color:var(--text)}.sync-conflict h2 {font-size:18px;margin-top:0}.sync-conflict p {line-height:1.6}.sync-error {color:var(--bad)}
 [hidden] {display:none !important}.sync-blocked #view-root {pointer-events:none;opacity:.45;user-select:none}
-@media(max-width:600px) {.sync-bar {align-items:flex-start}.sync-bar button {flex-shrink:0}.sync-panel {padding:20px}.sync-conflict {margin:14px 20px}.sync-actions button {flex-grow:1}}
+@media(max-width:600px) {.sync-bar {align-items:flex-start}.sync-bar button {flex-shrink:0}.sync-panel {padding:20px}.sync-conflict,.sync-storage-notice {margin:14px 20px}.sync-actions button {flex-grow:1}}

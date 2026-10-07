@@ -23,6 +23,8 @@ Once the status reads **Up to date**, sign into that same account on another com
 
 ## Reliability and conflicts
 
+If the browser denies access to local storage, the vault opens with a clearly labelled temporary save. Progress and the authentication session stay in memory for this tab, and sign-in/sign-out switch accounts without reloading it. The Supabase client uses the same guarded storage adapter. Sign in to load/save online progress and wait for **Up to date** before closing the tab. After reopening, sign in again. Download a backup if an upload fails. Allowing site data restores normal browser persistence on the next page load; the application does not change browser settings or erase existing saves. Quota errors and corrupted records still block unsafe writes instead of silently starting empty.
+
 The browser saves one complete snapshot before attempting an upload. Autosync is debounced; opening the page, returning to a tab, reconnecting, or pressing **Sync now** checks for updates. The database uses compare-and-swap revisions, so a stale device cannot silently replace a newer save.
 
 If both devices changed, practice is paused and the user chooses the online or device version. Both versions are backed up locally and can be downloaded. Changes are not automatically added together because XP, resets, and repeated answers cannot safely be merged from aggregate snapshots. Local safety copies are retained, not automatically pruned. Download the current progress and safety copies before clearing browser data.
@@ -32,6 +34,8 @@ Only a previously loaded account can continue from a cached save when its databa
 ## Tests
 
 `node --test tools/ceh-sync/progress-store.test.cjs` covers legacy preservation, explicit migration, two users, another computer, offline recovery, revision conflicts, in-flight edits, stale tabs, corrupted storage, and quota failures.
+
+Storage denial regression tests additionally cover throwing storage getters, readable-but-write-blocked storage, rejection of incomplete legacy copies, and cancelling an old account's pending uploads. Isolated mobile browser tests with both storage getters blocked exercise the real SDK with intercepted authentication/database responses, including signup, sign-in without reload, account isolation, reopening and resume, no duplicate XP, failed download/retry, and the on-page temporary-save notice. These tests create no hosted accounts and modify no real user progress.
 
 The database schema was additionally executed against local PostgreSQL using PGlite, testing anonymous denial, account isolation, attempted cross-account writes, invalid payloads, forbidden deletion, and stale revisions. Isolated browser tests verified the owner's backup with mocked cloud transport, conflicts, real quiz answers, and mobile layout.
 

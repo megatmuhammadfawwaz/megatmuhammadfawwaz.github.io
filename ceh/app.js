@@ -1520,6 +1520,15 @@
   window.addEventListener('resize', handleResize);
   window.addEventListener('storage', handleStorage);
   window.addEventListener('ceh-progress-changed', function () { handleStorage({key:null}); });
+  window.addEventListener('ceh-account-changed', function () {
+    CURRENT = { catKey:null, screen:'home', feedback:null, celebrations:[], lastRun:null, weakTab:'weak', weakCat:'ALL' };
+    hideTip(); PROGRESS = loadProgress(); STATS = loadStats();
+    if (!window.CEHProgress.isBlocked()) {
+      migrateFromProgress();
+      if (STATS.activeRun) endRun();
+    }
+    renderHome();
+  });
   window.addEventListener('ceh-save-state', function (e) {
     document.getElementById('app').classList.toggle('sync-blocked', e.detail.blocked);
     document.getElementById('view-root').inert = e.detail.blocked;

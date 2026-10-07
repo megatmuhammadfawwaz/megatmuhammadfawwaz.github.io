@@ -109,3 +109,43 @@ test('storage failure prevents a cloud write',async()=>{
   await store.sync();
   assert.equal(cloud.users.has('owner'),false);
 });
+
+test('blocked localStorage getter uses isolated temporary storage',async()=>{
+  const browser={get localStorage(){throw Object.assign(Error('Access is denied for this document'),{name:'SecurityError'});}};
+  const result=Store.browserStorage(browser);assert.equal(result.persistent,false);
+  const store=make(result.storage,null);await store.initialize();store.saveStats({xp:10});
+  assert.equal(store.getStats().xp,10);
+  assert.equal(Store.browserStorage(browser).storage.getItem('ceh_quiz_guest_v2'),null);
+});
+test('write-blocked storage copies readable CEH data without changing its original',()=>{
+  const original=memory({ceh_quiz_stats_v1:'{"xp":10503}',ceh_account_session_v1:'existing-session',unrelated:'untouched'});
+  original.setItem=()=>{throw Object.assign(Error('Writes forbidden'),{name:'SecurityError'});};
+  const result=Store.browserStorage({localStorage:original});assert.equal(result.persistent,false);
+  assert.equal(result.storage.getItem('ceh_quiz_stats_v1'),'{"xp":10503}');
+  assert.equal(result.storage.getItem('ceh_account_session_v1'),'existing-session');
+  assert.equal(result.storage.getItem('unrelated'),null);
+  result.storage.setItem('ceh_quiz_stats_v1','{"xp":1}');assert.equal(original.getItem('ceh_quiz_stats_v1'),'{"xp":10503}');
+});
+test('quota failure never becomes an empty temporary save',()=>{
+  const original=memory({ceh_quiz_stats_v1:'{"xp":10503}'});
+  original.setItem=()=>{throw Object.assign(Error('Full'),{name:'QuotaExceededError'});};
+  assert.throws(()=>Store.browserStorage({localStorage:original}),/Full/);
+  assert.equal(original.getItem('ceh_quiz_stats_v1'),'{"xp":10503}');
+});
+test('partly unreadable storage never offers an incomplete legacy migration',()=>{
+  const original=memory({ceh_quiz_progress_v1:'{"saved":true}',ceh_quiz_stats_v1:'{"xp":10503}'});
+  original.setItem=()=>{throw Object.assign(Error('Writes forbidden'),{name:'SecurityError'});};
+  const get=original.getItem;original.getItem=k=>{if(k==='ceh_quiz_stats_v1')throw Object.assign(Error('Reads forbidden'),{name:'SecurityError'});return get(k);};
+  const result=Store.browserStorage({localStorage:original});assert.equal(result.storage.length,0);
+  assert.equal(get('ceh_quiz_stats_v1'),'{"xp":10503}');
+});
+test('available browser storage is retained and the probe leaves no record',()=>{
+  const original=memory({ceh_quiz_stats_v1:'{"xp":10503}'});
+  const result=Store.browserStorage({localStorage:original});assert.equal(result.persistent,true);
+  assert.equal(result.storage,original);assert.equal(original.length,1);
+});
+test('disposed account stores cannot make later cloud requests',async()=>{
+  const cloud=server(),storage=memory(),store=make(storage,'owner',cloud);await store.initialize();
+  store.saveStats({xp:10});store.dispose();assert.equal(await store.sync(),false);
+  assert.equal(cloud.users.has('owner'),false);assert.equal(store.getState().dirty,true);
+});

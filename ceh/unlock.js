@@ -26,7 +26,7 @@
       location.href = "../";
     });
     var s = document.createElement("script");
-    s.src = "app.js?v=accounts-2";
+    s.src = "app.js?v=storage-3";
     document.body.appendChild(s);
   }
 

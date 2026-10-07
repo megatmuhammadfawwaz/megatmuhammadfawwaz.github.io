@@ -4,6 +4,33 @@
   var LEGACY_STATS = 'ceh_quiz_stats_v1';
   var LEGACY_BACKUP = 'ceh_quiz_original_backup_v2';
   var LEGACY_OWNER = 'ceh_quiz_original_owner_v2';
+  function browserStorage(browser) {
+    var storage = null, probe = 'ceh_storage_probe_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    try {
+      storage = browser.localStorage; // The getter itself can throw when site data is blocked.
+      storage.setItem(probe, '1'); storage.removeItem(probe);
+      return {storage:storage, persistent:true};
+    } catch (err) {
+      // Do not disguise quota errors or corrupt data as a new empty save.
+      if (err.name !== 'SecurityError' && err.name !== 'NotAllowedError') throw err;
+      var values = new Map();
+      if (storage) {
+        try {
+          for (var i = 0; i < storage.length; i++) {
+            var k = storage.key(i);
+            if (k && (k.indexOf('ceh_quiz_') === 0 || k === 'ceh_account_session_v1')) {
+              values.set(k, storage.getItem(k));
+            }
+          }
+        } catch (_) {values.clear();} // Never offer a partial copy as the original progress.
+      }
+      return {persistent:false, storage:{
+        get length() {return values.size;}, key:function (i) {return Array.from(values.keys())[i] || null;},
+        getItem:function (k) {return values.has(String(k)) ? values.get(String(k)) : null;},
+        setItem:function (k,v) {values.set(String(k),String(v));}, removeItem:function (k) {values.delete(String(k));}
+      }};
+    }
+  }
   function clone(value) { return JSON.parse(JSON.stringify(value)); }
   function object(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }
   function valid(payload) {
@@ -33,7 +60,7 @@
   function create(options) {
     var storage = options.storage, userId = options.userId || null, cloud = options.cloud || null;
     var key = userId ? 'ceh_quiz_user_v2:' + userId : 'ceh_quiz_guest_v2';
-    var state, conflict = null, busy = null, timer = null, ready = false, status = 'Loading progress';
+    var state, conflict = null, busy = null, timer = null, ready = false, disposed = false, status = 'Loading progress';
     var lastError = null;
     function emit(changed) { if (options.onChange) options.onChange({changed: !!changed, status: status, conflict: conflict, error: lastError}); }
     function persist() { storage.setItem(key, JSON.stringify(state)); }
@@ -99,7 +126,7 @@
     }
     function schedule() {
       clearTimeout(timer);
-      if (userId && !conflict) timer = setTimeout(function () { sync(); }, options.delay === undefined ? 900 : options.delay);
+      if (userId && !conflict && !disposed) timer = setTimeout(function () { sync(); }, options.delay === undefined ? 900 : options.delay);
     }
     function update(part, value) {
       if (!ready) throw new Error('Progress is still loading.');
@@ -119,10 +146,11 @@
       report(userId ? 'Changes waiting to sync' : 'Saved on this browser'); schedule();
     }
     async function synchronize() {
-      if (!userId || !ready || conflict) return false;
+      if (!userId || !ready || conflict || disposed) return false;
       checkSibling();
       if (!state.dirty) {
         var remote = await cloud.load();
+        if (disposed) return false;
         checkSibling();
         // Answers may have arrived while the download was in flight.
         if (remote && Number(remote.revision) !== state.revision) {
@@ -134,6 +162,7 @@
       }
       var sent = clone(state); report('Saving online…');
       var result = await cloud.save({progress:sent.progress, stats:sent.stats}, sent.revision);
+      if (disposed) return false;
       checkSibling();
       if (!result.ok) { setConflict(result); return false; }
       state.revision = Number(result.revision); state.cloudUpdatedAt = result.updated_at;
@@ -142,10 +171,11 @@
       if (state.dirty) schedule(); return true;
     }
     function sync() {
+      if (disposed) return Promise.resolve(false);
       if (busy) return busy;
       clearTimeout(timer);
       busy = synchronize().catch(function (err) {
-        report('Sync paused — your browser save is safe', err); return false;
+        if (!disposed) report('Sync paused — your browser save is safe', err); return false;
       }).finally(function () { busy = null; });
       return busy;
     }
@@ -182,6 +212,7 @@
     }
     return {
       initialize:initialize, sync:sync, resolve:resolve, claimLegacy:claimLegacy, canClaim:canClaim,
+      dispose:function () {disposed = true; clearTimeout(timer);},
       getProgress:function () {return state.progress;}, getStats:function () {return state.stats;},
       saveProgress:function (p) {update('progress',p);}, saveStats:function (s) {update('stats',s);},
       getState:function () {return clone(state);}, getConflict:function () {return conflict && clone(conflict);},
@@ -194,5 +225,5 @@
       }
     };
   }
-  root.CEHStore = {create:create, valid:valid, legacy:legacy, hasProgress:hasProgress};
+  root.CEHStore = {create:create, browserStorage:browserStorage, valid:valid, legacy:legacy, hasProgress:hasProgress};
 })(typeof window === 'undefined' ? globalThis : window);
