@@ -441,6 +441,10 @@ kbd { font-family: var(--f-mono); }
 }
 .cert__shot--pending::after { content: none; }
 .spin { font-size: 28px; color: var(--amber); }
+.cert__badge { padding: 24px 18px; border-bottom: 1px solid var(--line); font-family: var(--f-mono); font-size: 24px; color: var(--green); background: var(--panel-2); }
+.cert__badge span { display: block; margin-top: 6px; color: var(--dim); font-size: 11px; }
+.cert__dates, .cert__id { margin-top: 10px; font-family: var(--f-mono); font-size: 11px; color: var(--dim); }
+.cert__id { overflow-wrap: anywhere; }
 .cert__body { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
 .cert__issuer { font-family: var(--f-mono); font-size: 12px; color: var(--magenta); }
 .cert__name { font-family: var(--f-display); font-weight: 600; font-size: 19px; letter-spacing: -0.02em; line-height: 1.25; margin-top: 4px; }
@@ -581,15 +585,11 @@ dialog { color: var(--ink); }
   .nav__search-text { display: none; }
 }
 
-/* five cards: a 3 + 2 layout with no empty slot */
+/* Desktop grids: three columns, with wider final skill modules. */
 @media (min-width: 961px) {
   .modules__grid, .certs { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .modules__grid > *, .certs > * { grid-column: span 2; }
-  .modules__grid > :nth-child(n+4), .certs > :nth-child(n+4) { grid-column: span 3; }
-  .certs > :nth-child(n+4) { flex-direction: row; }
-  .certs > :nth-child(n+4) .cert__shot { width: 56%; flex: none; border-bottom: 0; border-right: 1px solid var(--line); }
-  .certs > :nth-child(n+4) .cert__body { justify-content: center; }
-  .certs > :nth-child(n+4) .cert__foot { margin-top: 18px; flex-direction: column; gap: 2px; }
+  .modules__grid > :nth-child(n+4) { grid-column: span 3; }
 }
 
 @media (max-width: 960px) {
